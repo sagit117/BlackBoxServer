@@ -1,6 +1,6 @@
 {
   "name": "blackbox_server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "service for quickly creating server applications",
   "main": "server.js",
   "scripts": {

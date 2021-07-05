@@ -1,0 +1,16 @@
+{
+  "PORT":8082,
+  "DB_HOST":"localhost",
+  "DB_PORT":27017,
+  "DB_USER":"disp",
+  "DB_PASSWORD":"neoBorg666",
+  "DB_NAME":"dispEvents",
+  "DB_STRING_OPTIONS":"?authSource=dispEvents",
+  "USE_RABBIT": false,
+  "RABBITMQ_URL":"amqp://root:password@172.23.16.51:5672",
+  "RABBITMQ_RECEIVE_QUEUE_NAME":"q_PreparedUserEvents",
+  "RABBITMQ_RECEIVE_EXCHANGE":"ex_PreparedUserEvents",
+  "RABBITMQ_RECEIVE_ROUTING_KEY":"k_PreparedUserEvents",
+  "RABBITMQ_RECEIVE_BIND_XMTTL":600000,
+  "USE_WS": false
+}

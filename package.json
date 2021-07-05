@@ -1,0 +1,54 @@
+{
+  "name": "blackbox_server",
+  "version": "1.0.0",
+  "description": "service for quickly creating server applications",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "NODE_ENV=development webpack-cli --config webpack.config.cjs --watch --stats-error-details --progress",
+    "start": "nodemon --trace-warnings dist/server.js",
+    "build": "NODE_ENV=production webpack-cli --config webpack.config.cjs --progress"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "keywords": [
+    "blackbox",
+    "server",
+    "REST"
+  ],
+  "private": false,
+  "devDependencies": {
+    "@types/cli-color": "^2.0.0",
+    "@types/express": "^4.17.12",
+    "@types/node": "^15.6.1",
+    "@types/ws": "^7.4.4",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.3.0",
+    "ts-loader": "^9.2.2",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.2.4",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "dependencies": {
+    "amqplib": "^0.8.0",
+    "cli-color": "^2.0.0",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
+    "handlebars": "^4.7.7",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^3.6.8",
+    "mongoose": "^5.12.11",
+    "ws": "^7.4.6"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "jsxBracketSameLine": false
+  }
+}

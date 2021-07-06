@@ -2,7 +2,7 @@
   "name": "blackbox_server",
   "version": "1.0.22",
   "description": "service for quickly creating server applications",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development webpack-cli --config webpack.config.cjs --watch --stats-error-details --progress",

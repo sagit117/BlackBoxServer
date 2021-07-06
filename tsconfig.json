@@ -37,6 +37,6 @@
     "./src/**/*.ts",
     "./src/**/*.js",
     "**/*",
-    "custom.d.ts",
+//    "custom.d.ts",
   ]
 }

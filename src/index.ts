@@ -14,6 +14,20 @@ import { EventName } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
 
+export interface clientRequest extends Request {
+    ClientInfo: {
+        readonly connectDate: Date
+        requestUrl: string
+        requestMethod: string
+        requestCookies: string
+        requestSignedCookies: string
+        requestIP: string
+        body: object
+        queryParams: object
+    }
+}
+
+
 export const BlackBoxApp = Express()
 /**
  * Настройка приложения
@@ -142,7 +156,7 @@ export function createApp() {
      * @param next
      */
     function onRequest(
-        request: Request,
+        request: clientRequest,
         _response: Response,
         next: NextFunction
     ) {

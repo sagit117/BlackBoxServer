@@ -6,10 +6,10 @@ const mode = process.env.NODE_ENV || 'production'
 
 module.exports = {
     mode: mode,
-    entry: "./src/blackBox/server.ts",
+    entry: "./src/server.ts",
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "server.js",
+        filename: "index.js",
         clean: false, // очищать сборочный каталог перед новой сборкой
     },
     module: {

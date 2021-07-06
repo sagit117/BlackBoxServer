@@ -4,8 +4,8 @@ import WebSocket, {
     VerifyClientCallbackSync,
 } from 'ws'
 import http from 'http'
-import App from '../../app'
 import https from 'https'
+import {BlackBoxApp} from "../index";
 
 export let webSocketServer: WebSocket.Server | null = null
 
@@ -37,14 +37,14 @@ export function createWebSocket(options: IOptions) {
          * Обрабатываем то, что отправил клиент
          */
         ws.on('message', (m: Message) => {
-            App.emit('getMessageFromWS', ws, m)
+            BlackBoxApp.emit('getMessageFromWS', ws, m)
         })
 
         ws.on('error', (e) => {
-            App.emit('errorLog', e, 'SOCKET')
+            BlackBoxApp.emit('errorLog', e, 'SOCKET')
             ws.send(e)
         })
 
-        App.emit('wsConnecting', ws)
+        BlackBoxApp.emit('wsConnecting', ws)
     })
 }

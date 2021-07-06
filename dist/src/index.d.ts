@@ -18,4 +18,4 @@ export function onErrorAfterResponse(
     _next: NextFunction
 ): void
 export function BlackBoxRouter(): BlackBoxApp.Router
-export function BlackBoxBaseController(): BaseController
+export function BlackBoxBaseController(): typeof BaseController

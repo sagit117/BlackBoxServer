@@ -15,6 +15,7 @@ import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
 import { getConfig } from './utils'
 import { clientRequest } from './server-types'
+import { serverStart } from './server'
 
 export const BlackBoxApp = Express()
 /**
@@ -199,6 +200,8 @@ export function createApp() {
 
         return response.status(StatusCode.OK).send('OK')
     }
+
+    serverStart()
 
     return BlackBoxApp
 }

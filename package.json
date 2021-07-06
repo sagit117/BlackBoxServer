@@ -1,9 +1,10 @@
 {
   "name": "blackbox_server",
-  "version": "1.0.26",
+  "version": "1.0.261",
   "description": "service for quickly creating server applications",
   "author": "Pavel Aksenov <sagit117@gmail.com>",
   "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development webpack-cli --config webpack.config.cjs --watch --stats-error-details --progress",

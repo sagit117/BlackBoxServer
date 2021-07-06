@@ -7,12 +7,10 @@ import http from 'http'
 import { createWebSocket } from './connectors/webSocket'
 import { connectRabbitMQ } from './connectors/rabbitMQ'
 
-const server = http.createServer(BlackBoxApp)
-
 /**
  * Запуск сервера
  */
-export function serverStart(env: NodeJS.ProcessEnv) {
+export function serverStart(server: http.Server, env: NodeJS.ProcessEnv) {
     /**
      * Создание веб-сокет соединения
      */

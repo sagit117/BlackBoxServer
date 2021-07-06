@@ -16,6 +16,7 @@ import StatusAppConnect from './dataClasses/statusAppConnect'
 import { getConfig } from './utils'
 import { clientRequest } from './server-types'
 import { serverStart } from './server'
+import http from 'http'
 
 export const BlackBoxApp = Express()
 /**
@@ -97,7 +98,6 @@ export function createApp(env: NodeJS.ProcessEnv) {
     /**
      * Обработчики http запросов
      */
-
     // лог todo: временное решение
     BlackBoxApp.use((request, _response: Response, next: NextFunction) =>
         onRequest(request as clientRequest, _response, next)
@@ -201,7 +201,11 @@ export function createApp(env: NodeJS.ProcessEnv) {
         return response.status(StatusCode.OK).send('OK')
     }
 
-    serverStart(env)
+    /**
+     * Процесс создания сервера и подключения к сервисам
+     */
+    const server = http.createServer(BlackBoxApp)
+    serverStart(server, env)
 
     return BlackBoxApp
 }

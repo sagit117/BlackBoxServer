@@ -14,6 +14,7 @@ const clientInfo_1 = __importDefault(require("./dataClasses/clientInfo"));
 const statusAppConnect_1 = __importDefault(require("./dataClasses/statusAppConnect"));
 const utils_1 = require("./utils");
 const server_1 = require("./server");
+const http_1 = __importDefault(require("http"));
 exports.BlackBoxApp = express_1.default();
 function createApp(env) {
     exports.BlackBoxApp.use(compression_1.default());
@@ -84,7 +85,8 @@ function createApp(env) {
         }
         return response.status(200).send('OK');
     }
-    server_1.serverStart(env);
+    const server = http_1.default.createServer(exports.BlackBoxApp);
+    server_1.serverStart(server, env);
     return exports.BlackBoxApp;
 }
 exports.createApp = createApp;

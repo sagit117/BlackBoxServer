@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class StatusAppInfo {
     constructor() {
         this.DB_IS_CONNECTED = false;
@@ -16,4 +18,4 @@ class StatusAppInfo {
         return this.RABBIT_IS_CONNECTED;
     }
 }
-export default new StatusAppInfo();
+exports.default = new StatusAppInfo();

@@ -1,6 +1,8 @@
-import { HttpInternalServerException, HttpValidationErrorException, } from '../../dataClasses/httpErrors';
-import { BlackBoxApp } from '../../index';
-export default class BaseController {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const httpErrors_1 = require("../../dataClasses/httpErrors");
+const index_1 = require("../../index");
+class BaseController {
     constructor(request, response, next) {
         this.request = request;
         this.response = response;
@@ -12,11 +14,11 @@ export default class BaseController {
             this.render(result, 200);
         })
             .catch((error) => {
-            BlackBoxApp.emit('errorLog', error, 'REQUEST');
+            index_1.BlackBoxApp.emit('errorLog', error, 'REQUEST');
             if (error.name === 'ValidationError') {
-                throw new HttpValidationErrorException('Данные не проходят проверку', this.response);
+                throw new httpErrors_1.HttpValidationErrorException('Данные не проходят проверку', this.response);
             }
-            throw new HttpInternalServerException('Произошла внутренняя ошибка сервера', this.response);
+            throw new httpErrors_1.HttpInternalServerException('Произошла внутренняя ошибка сервера', this.response);
         });
     }
     render(result, code) {
@@ -24,3 +26,4 @@ export default class BaseController {
         this.response.status(code).send(result);
     }
 }
+exports.default = BaseController;

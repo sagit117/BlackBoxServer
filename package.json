@@ -1,6 +1,6 @@
 {
   "name": "blackbox_server",
-  "version": "1.0.255",
+  "version": "1.0.256",
   "description": "service for quickly creating server applications",
   "author": "Pavel Aksenov <sagit117@gmail.com>",
   "main": "dist/src/index.js",
@@ -9,7 +9,7 @@
     "dev": "NODE_ENV=development webpack-cli --config webpack.config.cjs --watch --stats-error-details --progress",
     "start": "nodemon --trace-warnings dist/server.js",
     "build": "NODE_ENV=production webpack-cli --config webpack.config.cjs --progress",
-    "buildtsc": "tsc"
+    "buildtsc": "tsc -m commonjs"
   },
   "repository": {
     "type": "git",

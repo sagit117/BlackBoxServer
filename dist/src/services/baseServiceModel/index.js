@@ -1,4 +1,6 @@
-export default class BaseServiceModel {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class BaseServiceModel {
     constructor(model) {
         this.Model = model;
     }
@@ -24,3 +26,4 @@ export default class BaseServiceModel {
         return this.Model.updateOne(filter, data);
     }
 }
+exports.default = BaseServiceModel;

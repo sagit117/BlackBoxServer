@@ -1,49 +1,56 @@
-import amqp from 'amqplib/callback_api';
-import { getConfig } from '../utils';
-import StatusAppConnect from '../dataClasses/statusAppConnect';
-export let conn = null;
-const url = getConfig().RABBITMQ_URL || '';
-const queueName = getConfig().RABBITMQ_RECEIVE_QUEUE_NAME || '';
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendingMsg = exports.connectRabbitMQ = exports.conn = void 0;
+const callback_api_1 = __importDefault(require("amqplib/callback_api"));
+const utils_1 = require("../utils");
+const statusAppConnect_1 = __importDefault(require("../dataClasses/statusAppConnect"));
+exports.conn = null;
+const url = utils_1.getConfig().RABBITMQ_URL || '';
+const queueName = utils_1.getConfig().RABBITMQ_RECEIVE_QUEUE_NAME || '';
 const channelOptions = {
     durable: false,
     autoDelete: true,
 };
-const exchange = getConfig().RABBITMQ_SEND_EXCHANGE || '';
+const exchange = utils_1.getConfig().RABBITMQ_SEND_EXCHANGE || '';
 const channelSendOptions = {
     durable: true,
 };
-export function connectRabbitMQ(App) {
-    amqp.connect(url, function (error, connection) {
+function connectRabbitMQ(App) {
+    callback_api_1.default.connect(url, function (error, connection) {
         if (error) {
-            conn = null;
+            exports.conn = null;
             App.emit('errorLog', error, 'AMQP');
-            StatusAppConnect.connectedRabbit = false;
+            statusAppConnect_1.default.connectedRabbit = false;
             setTimeout(connectRabbitMQ.bind(null, App), 1000);
         }
         connection.on('error', function (err) {
-            conn = null;
+            exports.conn = null;
             if (err.message !== 'Connection closing') {
                 App.emit('errorLog', error, 'AMQP');
             }
-            StatusAppConnect.connectedRabbit = false;
+            statusAppConnect_1.default.connectedRabbit = false;
             setTimeout(connectRabbitMQ.bind(null, App), 1000);
         });
         connection.on('close', function () {
-            conn = null;
+            exports.conn = null;
             App.emit('eventLog', "AMQP_IS_RECONNECTING", 'amqp reconnecting');
-            StatusAppConnect.connectedRabbit = false;
+            statusAppConnect_1.default.connectedRabbit = false;
             setTimeout(connectRabbitMQ.bind(null, App), 1000);
         });
         App.emit('eventLog', "AMQP_IS_CONNECTED", 'amqp connected');
-        conn = connection;
-        StatusAppConnect.connectedRabbit = true;
+        exports.conn = connection;
+        statusAppConnect_1.default.connectedRabbit = true;
         receiveMsg(App);
     });
 }
+exports.connectRabbitMQ = connectRabbitMQ;
 function receiveMsg(App) {
-    if (!conn)
+    if (!exports.conn)
         return;
-    conn.createChannel(function (error, ch) {
+    exports.conn.createChannel(function (error, ch) {
         if (closeOnErr(error, App))
             return;
         ch.on('error', function (error) {
@@ -72,8 +79,8 @@ function receiveMsg(App) {
                 });
             }
         });
-        ch.bindQueue(queueName, getConfig().RABBITMQ_RECEIVE_EXCHANGE || '', getConfig().RABBITMQ_RECEIVE_ROUTING_KEY || '', {
-            'x-message-ttl': Number(getConfig().RABBITMQ_RECEIVE_BIND_XMTTL) || 600000,
+        ch.bindQueue(queueName, utils_1.getConfig().RABBITMQ_RECEIVE_EXCHANGE || '', utils_1.getConfig().RABBITMQ_RECEIVE_ROUTING_KEY || '', {
+            'x-message-ttl': Number(utils_1.getConfig().RABBITMQ_RECEIVE_BIND_XMTTL) || 600000,
         });
     });
     function work(msg, cb) {
@@ -81,10 +88,10 @@ function receiveMsg(App) {
         cb(true);
     }
 }
-export function sendingMsg(App, msg, doc) {
-    if (!conn)
+function sendingMsg(App, msg, doc) {
+    if (!exports.conn)
         return;
-    conn.createChannel(function (error, ch) {
+    exports.conn.createChannel(function (error, ch) {
         if (closeOnErr(error, App))
             return;
         if (!ch)
@@ -96,16 +103,17 @@ export function sendingMsg(App, msg, doc) {
             App.emit('eventLog', "AMQP_CHANNEL_IS_CLOSED", 'amqp канал отправки закрыт');
         });
         ch.assertExchange(exchange, 'fanout', channelSendOptions);
-        const sendingIsSuccess = ch.publish(exchange, getConfig().RABBITMQ_SEND_ROUTING_KEY || '', Buffer.from(msg));
+        const sendingIsSuccess = ch.publish(exchange, utils_1.getConfig().RABBITMQ_SEND_ROUTING_KEY || '', Buffer.from(msg));
         if (sendingIsSuccess) {
             doc.updateOne({ sending: true }).exec();
         }
     });
 }
+exports.sendingMsg = sendingMsg;
 function closeOnErr(error, App) {
-    if (!error || !conn)
+    if (!error || !exports.conn)
         return false;
     App.emit('errorLog', error, 'AMQP');
-    conn.close();
+    exports.conn.close();
     return true;
 }

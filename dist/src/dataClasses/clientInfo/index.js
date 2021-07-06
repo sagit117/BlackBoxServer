@@ -1,4 +1,6 @@
-export default class ClientInfo {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+class ClientInfo {
     constructor(request) {
         this.connectDate = new Date();
         this.requestUrl = '';
@@ -32,3 +34,4 @@ export default class ClientInfo {
         return JSON.stringify(this.toObject());
     }
 }
+exports.default = ClientInfo;

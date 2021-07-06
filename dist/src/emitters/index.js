@@ -1,13 +1,19 @@
-import { noticeMsg, errorMsg } from '../utils/log-colors';
-export function eventLog(eventName, description) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.errorPromiseLog = exports.errorLog = exports.eventLog = void 0;
+const log_colors_1 = require("../utils/log-colors");
+function eventLog(eventName, description) {
     const date = new Date();
-    console.log(noticeMsg(`⚡️[event ${eventName}]: ${date} - ${description}`));
+    console.log(log_colors_1.noticeMsg(`⚡️[event ${eventName}]: ${date} - ${description}`));
 }
-export function errorLog(error, reasonError) {
+exports.eventLog = eventLog;
+function errorLog(error, reasonError) {
     const date = new Date();
-    console.error(errorMsg(`⚡️[error ${reasonError}]: ${date} - name: ${error === null || error === void 0 ? void 0 : error.name}, message: ${error === null || error === void 0 ? void 0 : error.message}, stack: `, error === null || error === void 0 ? void 0 : error.stack));
+    console.error(log_colors_1.errorMsg(`⚡️[error ${reasonError}]: ${date} - name: ${error === null || error === void 0 ? void 0 : error.name}, message: ${error === null || error === void 0 ? void 0 : error.message}, stack: `, error === null || error === void 0 ? void 0 : error.stack));
 }
-export function errorPromiseLog(reason, promise) {
+exports.errorLog = errorLog;
+function errorPromiseLog(reason, promise) {
     const date = new Date();
-    console.error(errorMsg(`⚡️[error promise]: ${date} - reason: ${reason}, promise: `, promise));
+    console.error(log_colors_1.errorMsg(`⚡️[error promise]: ${date} - reason: ${reason}, promise: `, promise));
 }
+exports.errorPromiseLog = errorPromiseLog;

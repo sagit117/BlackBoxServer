@@ -13,6 +13,7 @@ const httpErrors_1 = require("./dataClasses/httpErrors");
 const clientInfo_1 = __importDefault(require("./dataClasses/clientInfo"));
 const statusAppConnect_1 = __importDefault(require("./dataClasses/statusAppConnect"));
 const utils_1 = require("./utils");
+const server_1 = require("./server");
 exports.BlackBoxApp = express_1.default();
 function createApp() {
     exports.BlackBoxApp.use(compression_1.default());
@@ -83,6 +84,7 @@ function createApp() {
         }
         return response.status(200).send('OK');
     }
+    server_1.serverStart();
     return exports.BlackBoxApp;
 }
 exports.createApp = createApp;

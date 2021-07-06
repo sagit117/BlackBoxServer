@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onErrorAfterResponse = exports.NotFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -99,3 +99,7 @@ function onErrorAfterResponse(error, _request, _response, _next) {
         exports.BlackBoxApp.emit('errorLog', error, 'CONTROLLER');
 }
 exports.onErrorAfterResponse = onErrorAfterResponse;
+function BlackBoxRouter() {
+    return express_1.default.Router();
+}
+exports.BlackBoxRouter = BlackBoxRouter;

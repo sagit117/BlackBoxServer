@@ -241,3 +241,11 @@ export function onErrorAfterResponse(
     if (error instanceof SyntaxError)
         BlackBoxApp.emit('errorLog', error, 'CONTROLLER')
 }
+
+/**
+ * Роутер
+ * @constructor
+ */
+export function BlackBoxRouter() {
+    return Express.Router()
+}

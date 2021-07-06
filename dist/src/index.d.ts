@@ -16,3 +16,4 @@ export function onErrorAfterResponse(
     _response: Response,
     _next: NextFunction
 ): void
+export function BlackBoxRouter(): BlackBoxApp.Router

@@ -25,7 +25,7 @@ export default class BaseController {
      * Обрабатываем запрос к БД и выводим ответ
      * @param promise   - запрос к БД
      */
-    prepareQueryAndSendResponse(promise: Query<any[], any, {}>) {
+    public prepareQueryAndSendResponse(promise: Query<any[], any, {}>) {
         promise
             .then((result) => {
                 this.render(result, StatusCode.OK)
@@ -52,7 +52,7 @@ export default class BaseController {
      * @param result    - данные для отправки
      * @param code      - код ответа из TStatusCode
      */
-    render(result: any, code: StatusCode) {
+    public render(result: any, code: StatusCode) {
         this.response.setHeader('Access-Control-Allow-Origin', '*')
         this.response.status(code).send(result)
         // this.next()

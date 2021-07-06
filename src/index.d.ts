@@ -1,4 +1,5 @@
 import { Express, NextFunction, Request, Response } from 'express'
+import BaseController from './controllers/baseController'
 export interface BlackBoxApp extends Express {}
 
 export function createApp(env: {
@@ -17,3 +18,4 @@ export function onErrorAfterResponse(
     _next: NextFunction
 ): void
 export function BlackBoxRouter(): BlackBoxApp.Router
+export function BlackBoxBaseController(): BaseController

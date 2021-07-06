@@ -17,6 +17,7 @@ import { getConfig } from './utils'
 import { clientRequest } from './server-types'
 import { serverStart } from './server'
 import http from 'http'
+import BaseController from './controllers/baseController'
 
 export const BlackBoxApp = Express()
 /**
@@ -248,4 +249,12 @@ export function onErrorAfterResponse(
  */
 export function BlackBoxRouter() {
     return Express.Router()
+}
+
+/**
+ * Базовый контроллер
+ * @constructor
+ */
+export function BlackBoxBaseController() {
+    return BaseController
 }

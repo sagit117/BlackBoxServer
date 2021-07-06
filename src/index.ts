@@ -13,20 +13,8 @@ import { StatusCode } from './controllers/baseController/base-controller'
 import { EventName } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
-
-export interface clientRequest extends Request {
-    ClientInfo: {
-        readonly connectDate: Date
-        requestUrl: string
-        requestMethod: string
-        requestCookies: string
-        requestSignedCookies: string
-        requestIP: string
-        body: object
-        queryParams: object
-    }
-}
-
+import {getConfig} from "./utils";
+import {clientRequest} from "./server-types";
 
 export const BlackBoxApp = Express()
 /**
@@ -109,8 +97,10 @@ export function createApp() {
      * Обработчики http запросов
      */
 
-    // лог
-    BlackBoxApp.use(onRequest)
+    // лог todo: временное решение
+    BlackBoxApp.use((request, _response: Response, next: NextFunction) =>
+        onRequest(request as clientRequest, _response, next)
+    )
 
     // служебные
     BlackBoxApp.get('/_ping', ping)
@@ -199,7 +189,7 @@ export function createApp() {
          * вернем 404 код
          */
         if (
-            // !StatusAppConnect.connectedRabbit ||
+            (getConfig().USE_RABBIT && !StatusAppConnect.connectedRabbit) ||
             !StatusAppConnect.connectedDB
         ) {
             return response
@@ -241,5 +231,6 @@ export function onErrorAfterResponse(
     _response: Response,
     _next: NextFunction
 ) {
-    if (error instanceof SyntaxError) BlackBoxApp.emit('errorLog', error, 'CONTROLLER')
+    if (error instanceof SyntaxError)
+        BlackBoxApp.emit('errorLog', error, 'CONTROLLER')
 }

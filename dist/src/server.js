@@ -13,7 +13,7 @@ const webSocket_1 = require("./connectors/webSocket");
 const rabbitMQ_1 = require("./connectors/rabbitMQ");
 const server = http_1.default.createServer(index_1.BlackBoxApp);
 function serverStart(env) {
-    webSocket_1.createWebSocket({ server, path: env.BASE_PATH || '' });
+    utils_1.getConfig().USE_WS && webSocket_1.createWebSocket({ server, path: env.BASE_PATH || '' });
     server
         .listen(utils_1.getConfig().PORT, () => {
         mongoDB_1.connectDB(index_1.BlackBoxApp)

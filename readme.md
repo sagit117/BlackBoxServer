@@ -1,7 +1,7 @@
 ## Проект для быстрого запуска бэкенд сервисов на nodejs и express
 
-###_Для конфигурации приложения необходимо в корне разместить файл configApp.json_
-####пример конфига
+### _Для конфигурации приложения необходимо в корне разместить файл configApp.json_
+#### пример конфига
 ```json
 {
   "PORT":8080,
@@ -19,5 +19,18 @@
   "RABBITMQ_RECEIVE_BIND_XMTTL":600000,
   "USE_WS": false
 }
+```
+
+### Подключение основного модуля сервера
+
+```js
+import { createApp } from "blackbox_server"
+
+const BASE_PATH = process.env.BASE_PATH
+const NODE_ENV = process.env.NODE_ENV
+
+const App = createApp({ BASE_PATH, NODE_ENV })
+
+export default App
 ```
 

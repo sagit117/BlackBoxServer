@@ -13,7 +13,10 @@ const server = http.createServer(BlackBoxApp)
  * Запуск сервера
  */
 export function serverStart(env: NodeJS.ProcessEnv) {
-    createWebSocket({ server, path: env.BASE_PATH || '' })
+    /**
+     * Создание веб-сокет соединения
+     */
+    getConfig().USE_WS && createWebSocket({ server, path: env.BASE_PATH || '' })
 
     server
         .listen(getConfig().PORT, () => {

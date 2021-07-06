@@ -13,8 +13,8 @@ import { StatusCode } from './controllers/baseController/base-controller'
 import { EventName } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
-import {getConfig} from "./utils";
-import {clientRequest} from "./server-types";
+import { getConfig } from './utils'
+import { clientRequest } from './server-types'
 
 export const BlackBoxApp = Express()
 /**
@@ -233,4 +233,10 @@ export function onErrorAfterResponse(
 ) {
     if (error instanceof SyntaxError)
         BlackBoxApp.emit('errorLog', error, 'CONTROLLER')
+}
+
+export default {
+    createApp,
+    NotFound,
+    onErrorAfterResponse,
 }

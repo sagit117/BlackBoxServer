@@ -9,7 +9,7 @@
     "moduleResolution": "node",
     "noImplicitAny": false,
     "noLib": false,
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
@@ -20,7 +20,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "jsx": "react",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -37,6 +36,6 @@
     "./src/**/*.ts",
     "./src/**/*.js",
     "**/*",
-//    "custom.d.ts",
+    "custom.d.ts",
   ]
 }

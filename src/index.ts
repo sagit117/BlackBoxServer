@@ -234,9 +234,3 @@ export function onErrorAfterResponse(
     if (error instanceof SyntaxError)
         BlackBoxApp.emit('errorLog', error, 'CONTROLLER')
 }
-
-export default {
-    createApp,
-    NotFound,
-    onErrorAfterResponse,
-}

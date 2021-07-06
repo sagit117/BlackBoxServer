@@ -9,7 +9,7 @@ export function notFound(
     _request: Request,
     response: Response,
     _next: NextFunction
-): Express.Response<any, Record<string, any>>
+): BlackBoxApp.Response<any, Record<string, any>>
 export function onErrorAfterResponse(
     error: Error,
     _request: Request,

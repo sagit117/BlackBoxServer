@@ -73,9 +73,17 @@ App.addListener('getMessageFromWS', (ws: WebSocket, message: string) => {
 ### Маршрутизация
 
 ```js
+import { createApp, notFound, onErrorAfterResponse } from 'blackbox_server'
+
 /**
  * Обработка маршрутов
  */
 App.use(`${BASE_PATH}/router`, Router)
+
+// 404
+App.use(notFound)
+// errors
+App.use(onErrorAfterResponse)
+
 ```
 

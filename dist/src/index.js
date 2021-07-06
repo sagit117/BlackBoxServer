@@ -90,10 +90,10 @@ function createApp(env) {
     return exports.BlackBoxApp;
 }
 exports.createApp = createApp;
-function NotFound(_request, response, _next) {
+function notFound(_request, response, _next) {
     return response.status(404).send('Ресурс не найден');
 }
-exports.NotFound = NotFound;
+exports.notFound = notFound;
 function onErrorAfterResponse(error, _request, _response, _next) {
     if (error instanceof SyntaxError)
         exports.BlackBoxApp.emit('errorLog', error, 'CONTROLLER');

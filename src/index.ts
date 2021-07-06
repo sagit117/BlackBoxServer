@@ -217,7 +217,7 @@ export function createApp(env: NodeJS.ProcessEnv) {
  * @param _next
  * @constructor
  */
-export function NotFound(
+export function notFound(
     _request: Request,
     response: Response,
     _next: NextFunction

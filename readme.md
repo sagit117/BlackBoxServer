@@ -1,6 +1,10 @@
 ## Проект для быстрого запуска бэкенд сервисов на nodejs и express
 
-### _Для конфигурации приложения необходимо в корне разместить файл configApp.json_
+### Установка
+
+> npm install blackbox_server @types/express
+
+### Для конфигурации приложения необходимо в корне разместить файл configApp.json
 #### пример конфига
 ```json
 {
@@ -32,5 +36,46 @@ const NODE_ENV = process.env.NODE_ENV
 const App = createApp({ BASE_PATH, NODE_ENV })
 
 export default App
+```
+
+### Слушатели rabbit
+
+```js
+/**
+ * Перехват статуса полученного от rabbitMQ
+ * @param msg - сообщение от rabbitMQ
+ */
+App.addListener('getMessageRabbit', (msg) => {
+    const str: string = msg.content.toString()
+
+    console.log(str)
+})
+```
+
+### Слушатели websocket
+
+```js
+/**
+ * Перехват нового подключения к ws
+ */
+App.addListener('wsConnecting', (ws: WebSocket) => {
+    ws.send('hello')
+})
+
+/**
+ * Перехват получения сообщения от ws
+ */
+App.addListener('getMessageFromWS', (ws: WebSocket, message: string) => {
+    console.log(message)
+})
+```
+
+### Маршрутизация
+
+```js
+/**
+ * Обработка маршрутов
+ */
+App.use(`${BASE_PATH}/router`, Router)
 ```
 

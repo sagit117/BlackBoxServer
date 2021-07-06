@@ -1,8 +1,8 @@
 {
   "name": "blackbox_server",
-  "version": "1.0.253",
+  "version": "1.0.254",
   "description": "service for quickly creating server applications",
-  "main": "index.js",
+  "main": "dist/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development webpack-cli --config webpack.config.cjs --watch --stats-error-details --progress",
@@ -52,5 +52,6 @@
     "singleQuote": true,
     "bracketSpacing": true,
     "jsxBracketSameLine": false
-  }
+  },
+  "files": ["dist"]
 }

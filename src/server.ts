@@ -8,12 +8,13 @@ import { createWebSocket } from './connectors/webSocket'
 import { connectRabbitMQ } from './connectors/rabbitMQ'
 
 const server = http.createServer(BlackBoxApp)
-createWebSocket({ server, path: process.env.BASE_PATH || '' })
 
 /**
  * Запуск сервера
  */
-export function serverStart() {
+export function serverStart(env: NodeJS.ProcessEnv) {
+    createWebSocket({ server, path: env.BASE_PATH || '' })
+
     server
         .listen(getConfig().PORT, () => {
             /**
@@ -24,9 +25,7 @@ export function serverStart() {
                     BlackBoxApp.emit(
                         'eventLog',
                         EventName.SERVER_IS_RUNNING,
-                        `port: ${getConfig().PORT}, mode: ${
-                            process.env.NODE_ENV
-                        }`
+                        `port: ${getConfig().PORT}, mode: ${env.NODE_ENV}`
                     )
 
                     /**

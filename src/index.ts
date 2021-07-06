@@ -21,7 +21,7 @@ export const BlackBoxApp = Express()
 /**
  * Настройка приложения
  */
-export function createApp() {
+export function createApp(env: NodeJS.ProcessEnv) {
     /**
      * Сжатие
      */
@@ -30,7 +30,7 @@ export function createApp() {
     /**
      * Парсеры
      */
-    // BlackBoxApp.use(CookieParse(process.env.COOKIE_SECRET)) // Передаем строку шифрования для cookie
+    // BlackBoxApp.use(CookieParse(env.COOKIE_SECRET)) // Передаем строку шифрования для cookie
 
     const urlencodedParser = BodyParser.urlencoded({
         limit: '50mb',
@@ -201,7 +201,7 @@ export function createApp() {
         return response.status(StatusCode.OK).send('OK')
     }
 
-    serverStart()
+    serverStart(env)
 
     return BlackBoxApp
 }

@@ -18,6 +18,7 @@ import { clientRequest } from './server-types'
 import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
+import { THeader } from './utils/utils'
 
 export const BlackBoxApp = Express()
 /**
@@ -99,10 +100,15 @@ export function createApp(env: NodeJS.ProcessEnv) {
     /**
      * Обработчики http запросов
      */
-    // лог todo: временное решение
+    // лог
     BlackBoxApp.use((request, _response: Response, next: NextFunction) =>
         onRequest(request as clientRequest, _response, next)
     )
+
+    /**
+     * Установка заголовков ответа
+     */
+    BlackBoxApp.use(setHeader)
 
     // служебные
     BlackBoxApp.get('/_ping', ping)
@@ -200,6 +206,28 @@ export function createApp(env: NodeJS.ProcessEnv) {
         }
 
         return response.status(StatusCode.OK).send('OK')
+    }
+
+    /**
+     * Установка заголовков
+     * @param _request
+     * @param response
+     * @param next
+     */
+    function setHeader(
+        _request: Request,
+        response: Response,
+        next: NextFunction
+    ) {
+        const headers: THeader[] = getConfig().HEADERS
+
+        if (headers && Array.isArray(headers)) {
+            headers.forEach((head) => {
+                response.setHeader(head?.key, head?.value)
+            })
+        }
+
+        next()
     }
 
     /**

@@ -22,7 +22,6 @@ class BaseController {
         });
     }
     render(result, code) {
-        this.response.setHeader('Access-Control-Allow-Origin', '*');
         this.response.status(code).send(result);
     }
 }

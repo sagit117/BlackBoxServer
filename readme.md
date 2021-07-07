@@ -23,7 +23,21 @@
     "RABBITMQ_RECEIVE_EXCHANGE": "ex_name",
     "RABBITMQ_RECEIVE_ROUTING_KEY": "k_name",
     "RABBITMQ_RECEIVE_BIND_XMTTL": 600000,
-    "USE_WS": false
+    "USE_WS": false,
+    "HEADERS": [
+        {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+        },
+        {
+            "key": "Access-Control-Allow-Origin",
+            "value": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+        },
+        {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type"
+        }
+    ]
 }
 ```
 

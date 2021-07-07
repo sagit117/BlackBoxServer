@@ -15,4 +15,7 @@ export interface IConfigApp {
     RABBITMQ_SEND_EXCHANGE: string
     RABBITMQ_SEND_ROUTING_KEY: string
     USE_WS: boolean
+    HEADERS: THeader[]
 }
+
+export type THeader = { key: string; value: string }

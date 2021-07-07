@@ -1,6 +1,12 @@
 import { Express, NextFunction, Request, Response } from 'express'
+import { EventName } from './emitters/emitters'
 
 export interface BlackBoxApp extends Express {}
+
+/**
+ * Перечисление событий сервера
+ */
+export const BlackBoxEventName = EventName
 
 // == Сущности
 
@@ -12,7 +18,11 @@ export class BlackBoxBaseController {
     response: Response
     next: NextFunction | null
 
-    constructor(request: TBlackBoxRequest, response: TBlackBoxResponse, next?: TBlackBoxNextFunction)
+    constructor(
+        request: TBlackBoxRequest,
+        response: TBlackBoxResponse,
+        next?: TBlackBoxNextFunction
+    )
 
     /**
      * Обрабатываем запрос к БД и выводим ответ

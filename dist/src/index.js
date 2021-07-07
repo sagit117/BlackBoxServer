@@ -53,6 +53,7 @@ function createApp(env) {
         });
     });
     exports.BlackBoxApp.use((request, _response, next) => onRequest(request, _response, next));
+    exports.BlackBoxApp.use(setHeader);
     exports.BlackBoxApp.get('/_ping', ping);
     exports.BlackBoxApp.get('/healthcheck', healthCheck);
     exports.BlackBoxApp.use(onErrorRequest);
@@ -85,6 +86,15 @@ function createApp(env) {
                 .send(JSON.stringify(statusAppConnect_1.default));
         }
         return response.status(200).send('OK');
+    }
+    function setHeader(_request, response, next) {
+        const headers = utils_1.getConfig().HEADERS;
+        if (headers && Array.isArray(headers)) {
+            headers.forEach((head) => {
+                response.setHeader(head === null || head === void 0 ? void 0 : head.key, head === null || head === void 0 ? void 0 : head.value);
+            });
+        }
+        next();
     }
     const server = http_1.default.createServer(exports.BlackBoxApp);
     server_1.serverStart(server, env);

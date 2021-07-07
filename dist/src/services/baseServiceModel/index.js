@@ -16,14 +16,17 @@ class BaseServiceModel {
     create(data) {
         return new this.Model(data).save();
     }
-    createOrUpdate(data) {
+    createOrUpdateById(data) {
         if (data._id) {
             return this.Model.updateOne({ _id: data._id }, data).exec();
         }
         return new this.Model(data).save();
     }
-    updateOneWithFilter(filter, data) {
+    updateOneByFilter(filter, data) {
         return this.Model.updateOne(filter, data);
+    }
+    remove(filter) {
+        return this.Model.deleteMany(filter);
     }
 }
 exports.default = BaseServiceModel;

@@ -48,7 +48,7 @@ export default class BaseServiceModel {
      * Создание или обновление записи
      * @param data - данные записи
      */
-    createOrUpdate<T extends { _id: string }>(data: T) {
+    createOrUpdateById<T extends { _id: string }>(data: T) {
         if (data._id) {
             return this.Model.updateOne({ _id: data._id }, data).exec()
         }
@@ -61,7 +61,21 @@ export default class BaseServiceModel {
      * @param filter
      * @param data
      */
-    updateOneWithFilter(filter, data) {
+    updateOneByFilter<T>(filter: object, data: T) {
         return this.Model.updateOne(filter, data)
+    }
+
+    /**
+     * Удаление записи
+     * @param filter
+     */
+    remove(filter: object): Query<
+        { ok?: number | undefined; n?: number | undefined } & {
+            deletedCount?: number | undefined
+        },
+        any,
+        {}
+    > {
+        return this.Model.deleteMany(filter)
     }
 }

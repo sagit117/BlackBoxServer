@@ -5,30 +5,32 @@
 > npm install blackbox_server @types/express
 
 ### Для конфигурации приложения необходимо в корне разместить файл configApp.json
+
 #### пример конфига
+
 ```json
 {
-  "PORT":8080,
-  "DB_HOST":"localhost",
-  "DB_PORT":27017,
-  "DB_USER":"user_name",
-  "DB_PASSWORD":"secret",
-  "DB_NAME":"db_name",
-  "DB_STRING_OPTIONS":"?authSource=db_name",
-  "USE_RABBIT": false,
-  "RABBITMQ_URL":"amqp://root:password@localhost:5672",
-  "RABBITMQ_RECEIVE_QUEUE_NAME":"q_name",
-  "RABBITMQ_RECEIVE_EXCHANGE":"ex_name",
-  "RABBITMQ_RECEIVE_ROUTING_KEY":"k_name",
-  "RABBITMQ_RECEIVE_BIND_XMTTL":600000,
-  "USE_WS": false
+    "PORT": 8080,
+    "DB_HOST": "localhost",
+    "DB_PORT": 27017,
+    "DB_USER": "user_name",
+    "DB_PASSWORD": "secret",
+    "DB_NAME": "db_name",
+    "DB_STRING_OPTIONS": "?authSource=db_name",
+    "USE_RABBIT": false,
+    "RABBITMQ_URL": "amqp://root:password@localhost:5672",
+    "RABBITMQ_RECEIVE_QUEUE_NAME": "q_name",
+    "RABBITMQ_RECEIVE_EXCHANGE": "ex_name",
+    "RABBITMQ_RECEIVE_ROUTING_KEY": "k_name",
+    "RABBITMQ_RECEIVE_BIND_XMTTL": 600000,
+    "USE_WS": false
 }
 ```
 
 ### Подключение основного модуля сервера
 
 ```js
-import { createApp } from "blackbox_server"
+import { createApp } from 'blackbox_server'
 
 const BASE_PATH = process.env.BASE_PATH
 const NODE_ENV = process.env.NODE_ENV
@@ -84,6 +86,52 @@ App.use(`${BASE_PATH}/router`, Router)
 App.use(notFound)
 // errors
 App.use(onErrorAfterResponse)
-
 ```
 
+### Подключение роутера
+
+```js
+import {
+    BlackBoxRouter,
+    TBlackBoxNextFunction,
+    TBlackBoxResponse,
+    TBlackBoxRequest,
+} from 'blackbox_server'
+import Controller from '../../controllers/LoginController'
+
+const Router = BlackBoxRouter()
+
+Router.post(
+    '/v1/get-token',
+    (
+        request: TBlackBoxRequest,
+        response: TBlackBoxResponse,
+        next: TBlackBoxNextFunction
+    ) => new Controller(request, response, next).getToken()
+)
+
+export default Router
+```
+
+### Подключение контроллера
+
+```js
+import {
+    BlackBoxBaseController,
+    TBlackBoxRequest,
+    TBlackBoxResponse,
+    TBlackBoxNextFunction,
+} from 'blackbox_server'
+
+export default class LoginController extends BlackBoxBaseController() {
+    constructor(
+        request: TBlackBoxRequest,
+        response: TBlackBoxResponse,
+        _next: TBlackBoxNextFunction
+    ) {
+        super(request, response)
+    }
+
+    getToken() {}
+}
+```

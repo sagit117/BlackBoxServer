@@ -1,4 +1,4 @@
-import { Express, NextFunction, Request, Response } from 'express'
+import { Express, NextFunction, Request, Response, Router } from 'express'
 
 export interface BlackBoxApp extends Express {}
 
@@ -50,7 +50,7 @@ export class BlackBoxBaseController {
  * Роутер
  * @constructor
  */
-export function BlackBoxRouter(): BlackBoxApp.Router
+export function BlackBoxRouter(): Router
 
 /**
  * Базовый контроллер
@@ -88,7 +88,7 @@ export function notFound(
     _request: TBlackBoxRequest,
     response: TBlackBoxResponse,
     _next: TBlackBoxNextFunction
-): BlackBoxApp.Response<any, Record<string, any>>
+): Response<any, Record<string, any>>
 
 /**
  * Обработчик ошибок в запросах

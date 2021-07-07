@@ -1,4 +1,4 @@
-import { Express, NextFunction, Request, Response } from 'express'
+import { Express, NextFunction, Request, Response, Router } from 'express'
 
 export interface BlackBoxApp extends Express {}
 
@@ -47,16 +47,39 @@ export class BlackBoxBaseController {
 }
 
 /**
+ * Базовый класс для ошибок
+ */
+class HttpErrors extends Error {
+    constructor(name: string)
+}
+
+/**
+ * Класс ошибки валидации
+ */
+export class HttpValidationErrorException extends HttpErrors {
+    readonly response: Response
+
+    constructor(message: string, response: Response)
+}
+
+
+/**
  * Роутер
  * @constructor
  */
-export function BlackBoxRouter(): BlackBoxApp.Router
+export function BlackBoxRouter(): Router
 
 /**
  * Базовый контроллер
  * @constructor
  */
 export function BlackBoxBaseController(): typeof BlackBoxBaseController
+
+/**
+ * Класс ошибок валидации
+ * @constructor
+ */
+export function BlackBoxHttpValidationErrorException(): typeof HttpValidationErrorException
 
 // == Функции
 
@@ -88,7 +111,7 @@ export function notFound(
     _request: TBlackBoxRequest,
     response: TBlackBoxResponse,
     _next: TBlackBoxNextFunction
-): BlackBoxApp.Response<any, Record<string, any>>
+): Response<any, Record<string, any>>
 
 /**
  * Обработчик ошибок в запросах

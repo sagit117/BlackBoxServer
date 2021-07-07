@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.BlackBoxHttpValidationErrorException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -57,45 +57,6 @@ function createApp(env) {
     exports.BlackBoxApp.get('/_ping', ping);
     exports.BlackBoxApp.get('/healthcheck', healthCheck);
     exports.BlackBoxApp.use(onErrorRequest);
-    function onErrorRequest(error, _request, response, _next) {
-        exports.BlackBoxApp.emit('errorLog', error, 'REQUEST');
-        if (error instanceof URIError) {
-            return response.status(400).send('oops ...');
-        }
-        if (error instanceof httpErrors_1.HttpUnauthorizedException) {
-            return response.status(401).send(error.message);
-        }
-        return response
-            .status(500)
-            .send(error.message);
-    }
-    function onRequest(request, _response, next) {
-        const clientInfo = new clientInfo_1.default(request);
-        request.ClientInfo = clientInfo.toObject();
-        exports.BlackBoxApp.emit('eventLog', "CLIENT_REQUEST", clientInfo.toString());
-        next();
-    }
-    function ping(_request, response, _next) {
-        return response.status(200).send('OK');
-    }
-    function healthCheck(_request, response, _next) {
-        if ((utils_1.getConfig().USE_RABBIT && !statusAppConnect_1.default.connectedRabbit) ||
-            !statusAppConnect_1.default.connectedDB) {
-            return response
-                .status(404)
-                .send(JSON.stringify(statusAppConnect_1.default));
-        }
-        return response.status(200).send('OK');
-    }
-    function setHeader(_request, response, next) {
-        const headers = utils_1.getConfig().HEADERS;
-        if (headers && Array.isArray(headers)) {
-            headers.forEach((head) => {
-                response.setHeader(head === null || head === void 0 ? void 0 : head.key, head === null || head === void 0 ? void 0 : head.value);
-            });
-        }
-        next();
-    }
     const server = http_1.default.createServer(exports.BlackBoxApp);
     server_1.serverStart(server, env);
     return exports.BlackBoxApp;
@@ -118,3 +79,44 @@ function BlackBoxBaseController() {
     return baseController_1.default;
 }
 exports.BlackBoxBaseController = BlackBoxBaseController;
+function BlackBoxHttpValidationErrorException() {
+    return httpErrors_1.HttpValidationErrorException;
+}
+exports.BlackBoxHttpValidationErrorException = BlackBoxHttpValidationErrorException;
+function onErrorRequest(error, _request, response, _next) {
+    exports.BlackBoxApp.emit('errorLog', error, 'REQUEST');
+    if (error instanceof URIError) {
+        return response.status(400).send('oops ...');
+    }
+    if (error instanceof httpErrors_1.HttpUnauthorizedException) {
+        return response.status(401).send(error.message);
+    }
+    return response.status(500).send(error.message);
+}
+function onRequest(request, _response, next) {
+    const clientInfo = new clientInfo_1.default(request);
+    request.ClientInfo = clientInfo.toObject();
+    exports.BlackBoxApp.emit('eventLog', "CLIENT_REQUEST", clientInfo.toString());
+    next();
+}
+function ping(_request, response, _next) {
+    return response.status(200).send('OK');
+}
+function healthCheck(_request, response, _next) {
+    if ((utils_1.getConfig().USE_RABBIT && !statusAppConnect_1.default.connectedRabbit) ||
+        !statusAppConnect_1.default.connectedDB) {
+        return response
+            .status(404)
+            .send(JSON.stringify(statusAppConnect_1.default));
+    }
+    return response.status(200).send('OK');
+}
+function setHeader(_request, response, next) {
+    const headers = utils_1.getConfig().HEADERS;
+    if (headers && Array.isArray(headers)) {
+        headers.forEach((head) => {
+            response.setHeader(head === null || head === void 0 ? void 0 : head.key, head === null || head === void 0 ? void 0 : head.value);
+        });
+    }
+    next();
+}

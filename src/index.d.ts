@@ -47,6 +47,23 @@ export class BlackBoxBaseController {
 }
 
 /**
+ * Базовый класс для ошибок
+ */
+class HttpErrors extends Error {
+    constructor(name: string)
+}
+
+/**
+ * Класс ошибки валидации
+ */
+export class HttpValidationErrorException extends HttpErrors {
+    readonly response: Response
+
+    constructor(message: string, response: Response)
+}
+
+
+/**
  * Роутер
  * @constructor
  */
@@ -57,6 +74,12 @@ export function BlackBoxRouter(): Router
  * @constructor
  */
 export function BlackBoxBaseController(): typeof BlackBoxBaseController
+
+/**
+ * Класс ошибок валидации
+ * @constructor
+ */
+export function BlackBoxHttpValidationErrorException(): typeof HttpValidationErrorException
 
 // == Функции
 

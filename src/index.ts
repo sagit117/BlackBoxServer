@@ -174,6 +174,14 @@ export function BlackBoxBaseController() {
     return BaseController
 }
 
+/**
+ * Класс ошибок валидации
+ * @constructor
+ */
+export function BlackBoxHttpValidationErrorException() {
+    return HttpValidationErrorException
+}
+
 /** Служебные функции */
 
 /**

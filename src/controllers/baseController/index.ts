@@ -49,6 +49,17 @@ export default class BaseController {
                         'Данные не проходят проверку',
                         this.response
                     )
+
+                    return
+                }
+
+                if (error.name === 'HttpValidationErrorException') {
+                    throw new HttpValidationErrorException(
+                        error.message,
+                        this.response
+                    )
+
+                    return
                 }
 
                 throw new HttpInternalServerException(

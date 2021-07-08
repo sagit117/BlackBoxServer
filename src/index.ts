@@ -207,6 +207,10 @@ function onErrorRequest(
         return response.status(StatusCode.UNAUTHORIZED).send(error.message)
     }
 
+    if (error instanceof HttpValidationErrorException) {
+        return response.status(StatusCode.BAD_REQUEST).send(error.message)
+    }
+
     return response.status(StatusCode.INTERNAL_SERVER_ERROR).send(error.message)
 }
 

@@ -14,7 +14,7 @@ function createWebSocket(options) {
             index_1.BlackBoxApp.emit('getMessageFromWS', ws, m);
         });
         ws.on('error', (e) => {
-            index_1.BlackBoxApp.emit('errorLog', e, 'SOCKET');
+            index_1.BlackBoxApp.emit('errorLog', e, "SOCKET");
             ws.send(e);
         });
         index_1.BlackBoxApp.emit('wsConnecting', ws);

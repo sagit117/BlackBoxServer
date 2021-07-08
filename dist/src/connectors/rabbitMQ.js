@@ -22,14 +22,14 @@ function connectRabbitMQ(App) {
     callback_api_1.default.connect(url, function (error, connection) {
         if (error) {
             exports.conn = null;
-            App.emit('errorLog', error, 'AMQP');
+            App.emit('errorLog', error, "AMQP");
             statusAppConnect_1.default.connectedRabbit = false;
             setTimeout(connectRabbitMQ.bind(null, App), 1000);
         }
         connection.on('error', function (err) {
             exports.conn = null;
             if (err.message !== 'Connection closing') {
-                App.emit('errorLog', error, 'AMQP');
+                App.emit('errorLog', error, "AMQP");
             }
             statusAppConnect_1.default.connectedRabbit = false;
             setTimeout(connectRabbitMQ.bind(null, App), 1000);
@@ -54,7 +54,7 @@ function receiveMsg(App) {
         if (closeOnErr(error, App))
             return;
         ch.on('error', function (error) {
-            App.emit('errorLog', error, 'AMQP_CHANNEL');
+            App.emit('errorLog', error, "AMQP_CHANNEL");
         });
         ch.on('close', function () {
             App.emit('eventLog', "AMQP_CHANNEL_IS_CLOSED", 'amqp канал получения закрыт');
@@ -97,7 +97,7 @@ function sendingMsg(App, msg, doc) {
         if (!ch)
             return;
         ch.on('error', function (error) {
-            App.emit('errorLog', error, 'AMQP_CHANNEL');
+            App.emit('errorLog', error, "AMQP_CHANNEL");
         });
         ch.on('close', function () {
             App.emit('eventLog', "AMQP_CHANNEL_IS_CLOSED", 'amqp канал отправки закрыт');
@@ -113,7 +113,7 @@ exports.sendingMsg = sendingMsg;
 function closeOnErr(error, App) {
     if (!error || !exports.conn)
         return false;
-    App.emit('errorLog', error, 'AMQP');
+    App.emit('errorLog', error, "AMQP");
     exports.conn.close();
     return true;
 }

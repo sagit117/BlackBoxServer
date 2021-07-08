@@ -14,7 +14,7 @@ class BaseController {
             this.render(result, 200);
         })
             .catch((error) => {
-            index_1.BlackBoxApp.emit('errorLog', error, 'REQUEST');
+            index_1.BlackBoxApp.emit('errorLog', error, "REQUEST");
             if (error.name === 'ValidationError') {
                 throw new httpErrors_1.HttpValidationErrorException('Данные не проходят проверку', this.response);
             }

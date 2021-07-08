@@ -69,7 +69,7 @@ function notFound(_request, response, _next) {
 exports.notFound = notFound;
 function onErrorAfterResponse(error, _request, _response, _next) {
     if (error instanceof SyntaxError)
-        exports.BlackBoxApp.emit('errorLog', error, 'CONTROLLER');
+        exports.BlackBoxApp.emit('errorLog', error, "CONTROLLER");
 }
 exports.onErrorAfterResponse = onErrorAfterResponse;
 function BlackBoxRouter() {
@@ -89,7 +89,7 @@ function BlackBoxBaseServiceModel() {
 }
 exports.BlackBoxBaseServiceModel = BlackBoxBaseServiceModel;
 function onErrorRequest(error, _request, response, _next) {
-    exports.BlackBoxApp.emit('errorLog', error, 'REQUEST');
+    exports.BlackBoxApp.emit('errorLog', error, "REQUEST");
     if (error instanceof URIError) {
         return response.status(400).send('oops ...');
     }

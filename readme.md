@@ -86,6 +86,18 @@ App.addListener('getMessageFromWS', (ws: WebSocket, message: string) => {
 })
 ```
 
+### Слушатель(логгер) ошибок
+
+```js
+App.emit('errorLog', error, 'Reason')
+```
+
+### Слушатель(логгер) событий
+
+```js
+App.emit('eventLog', 'EVENT', 'Message')
+```
+
 ### Маршрутизация
 
 ```js

@@ -16,12 +16,12 @@ export const enum BlackBoxEventName {
     AMQP_WORKER_IS_STARTED = 'AMQP_WORKER_IS_STARTED',
 }
 
-// == Сущности
+// ==== Сущности ====
 
 /**
  * Базовый контроллер
  */
-export class BlackBoxBaseController {
+class BlackBoxBaseController {
     request: Request
     response: Response
     next: NextFunction | null
@@ -56,12 +56,11 @@ class HttpErrors extends Error {
 /**
  * Класс ошибки валидации
  */
-export class HttpValidationErrorException extends HttpErrors {
+class HttpValidationErrorException extends HttpErrors {
     readonly response: Response
 
     constructor(message: string, response: Response)
 }
-
 
 /**
  * Роутер
@@ -81,7 +80,7 @@ export function BlackBoxBaseController(): typeof BlackBoxBaseController
  */
 export function BlackBoxHttpValidationErrorException(): typeof HttpValidationErrorException
 
-// == Функции
+// ==== Функции ====
 
 /**
  * Основная функция для создания приложения
@@ -99,7 +98,7 @@ export type TBlackBoxRequest = Request
 export type TBlackBoxResponse = Response
 export type TBlackBoxNextFunction = NextFunction
 
-// == Обработка запросов
+// ==== Обработка запросов ====
 
 /**
  * Страница 404
@@ -114,7 +113,7 @@ export function notFound(
 ): Response<any, Record<string, any>>
 
 /**
- * Обработчик ошибок в запросах
+ * Обработчик ошибок после запроса
  * @param error
  * @param _request
  * @param _response
@@ -126,3 +125,17 @@ export function onErrorAfterResponse(
     _response: TBlackBoxResponse,
     _next: NextFuncTBlackBoxNextFunctiontion
 ): void
+
+/**
+ * Обработчик ошибок в запросах
+ * @param error
+ * @param _request
+ * @param response
+ * @param _next
+ */
+export function onErrorRequest(
+    error: Error,
+    _request: Request,
+    response: Response,
+    _next: NextFunction
+): Response<any, Record<string, any>>

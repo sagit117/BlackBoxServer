@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlackBoxHttpValidationErrorException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.onErrorRequest = exports.BlackBoxHttpValidationErrorException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -96,6 +96,7 @@ function onErrorRequest(error, _request, response, _next) {
     }
     return response.status(500).send(error.message);
 }
+exports.onErrorRequest = onErrorRequest;
 function onRequest(request, _response, next) {
     const clientInfo = new clientInfo_1.default(request);
     request.ClientInfo = clientInfo.toObject();

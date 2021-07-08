@@ -191,7 +191,7 @@ export function BlackBoxHttpValidationErrorException() {
  * @param response  - response
  * @param _next
  */
-function onErrorRequest(
+export function onErrorRequest(
     error: Error,
     _request: Request,
     response: Response,

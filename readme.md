@@ -46,7 +46,7 @@
 ```js
 import { createApp } from 'blackbox_server'
 
-const BASE_PATH = process.env.BASE_PATH
+const BASE_PATH = process.env.BASE_PATH || ''
 const NODE_ENV = process.env.NODE_ENV
 
 const App = createApp({ BASE_PATH, NODE_ENV })

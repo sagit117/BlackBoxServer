@@ -89,16 +89,20 @@ App.addListener('getMessageFromWS', (ws: WebSocket, message: string) => {
 ### Маршрутизация
 
 ```js
-import { createApp, notFound, onErrorAfterResponse } from 'blackbox_server'
+import { createApp, notFound, onErrorAfterResponse, onErrorRequest } from 'blackbox_server'
 
 /**
  * Обработка маршрутов
  */
 App.use(`${BASE_PATH}/router`, Router)
 
+/**
+ * Обработка ошибок в маршрутах
+ */
 // 404
 App.use(notFound)
 // errors
+App.use(onErrorRequest)
 App.use(onErrorAfterResponse)
 ```
 
@@ -147,5 +151,20 @@ export default class LoginController extends BlackBoxBaseController() {
     }
 
     getToken() {}
+}
+```
+
+### Работа с ошибками в запросах
+
+```js
+import {
+    BlackBoxHttpValidationErrorException,
+} from 'blackbox_server'
+
+// валидация email
+if (!testEmail(userData?.email)) {
+    const error = BlackBoxHttpValidationErrorException()
+
+    throw new error('Ошибка валидации email', this.response)
 }
 ```

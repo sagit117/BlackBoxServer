@@ -41,7 +41,7 @@ export default class BaseController {
             .then((result) => {
                 this.render(result, StatusCode.OK)
             })
-            .catch((error) => {
+            .catch((error: Error) => {
                 BlackBoxApp.emit('errorLog', error, 'REQUEST')
 
                 if (error.name === 'ValidationError') {
@@ -49,17 +49,10 @@ export default class BaseController {
                         'Данные не проходят проверку',
                         this.response
                     )
-
-                    return
                 }
 
                 if (error.name === 'HttpValidationErrorException') {
-                    throw new HttpValidationErrorException(
-                        error.message,
-                        this.response
-                    )
-
-                    return
+                    throw error
                 }
 
                 throw new HttpInternalServerException(

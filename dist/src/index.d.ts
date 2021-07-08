@@ -1,5 +1,6 @@
 import { Express, NextFunction, Request, Response, Router } from 'express'
 import { Model, Query, UpdateWriteOpResult } from 'mongoose'
+import { IConfigApp } from './utils/utils'
 
 export interface BlackBoxApp extends Express {}
 
@@ -189,6 +190,12 @@ export type TBlackBoxRequest = Request
 export type TBlackBoxResponse = Response
 export type TBlackBoxNextFunction = NextFunction
 
+/**
+ * Чтение настроек
+ * @constructor
+ */
+export function BlackBoxGetConfig(): IConfigApp
+
 // ==== Обработка запросов ====
 
 /**
@@ -230,3 +237,4 @@ export function onErrorRequest(
     response: Response,
     _next: NextFunction
 ): Response<any, Record<string, any>>
+

@@ -18,7 +18,7 @@ import { clientRequest } from './server-types'
 import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
-import { THeader } from './utils/utils'
+import { IConfigApp, THeader } from './utils/utils'
 import BaseServiceModel from './services/baseServiceModel'
 
 export const BlackBoxApp = Express()
@@ -221,6 +221,14 @@ export function onErrorRequest(
     }
 
     return response.status(StatusCode.INTERNAL_SERVER_ERROR).send(error.message)
+}
+
+/**
+ * Чтение настроек
+ * @constructor
+ */
+export function BlackBoxGetConfig(): IConfigApp {
+    return getConfig()
 }
 
 /**

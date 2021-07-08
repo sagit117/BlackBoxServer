@@ -1,7 +1,7 @@
 import amqp from 'amqplib/callback_api'
 import { getConfig } from '../utils'
 import StatusAppConnect from '../dataClasses/statusAppConnect'
-import { EventName } from '../emitters/emitters'
+import { EventName, ReasonError } from '../emitters/emitters'
 
 /**
  * Глобальный екземпляр соединения с rabbitMQ
@@ -46,7 +46,7 @@ export function connectRabbitMQ(App) {
         if (error) {
             conn = null
 
-            App.emit('errorLog', error, 'AMQP')
+            App.emit('errorLog', error, ReasonError.AMQP)
 
             StatusAppConnect.connectedRabbit = false
 
@@ -60,7 +60,7 @@ export function connectRabbitMQ(App) {
             conn = null
 
             if (err.message !== 'Connection closing') {
-                App.emit('errorLog', error, 'AMQP')
+                App.emit('errorLog', error, ReasonError.AMQP)
             }
 
             StatusAppConnect.connectedRabbit = false
@@ -114,7 +114,7 @@ function receiveMsg(App) {
          * Слушатели событий канала
          */
         ch.on('error', function (error) {
-            App.emit('errorLog', error, 'AMQP_CHANNEL')
+            App.emit('errorLog', error, ReasonError.AMQP_CHANNEL)
         })
 
         ch.on('close', function () {
@@ -202,7 +202,7 @@ export function sendingMsg(App, msg: string, doc) {
          * Слушатели событий канала
          */
         ch.on('error', function (error) {
-            App.emit('errorLog', error, 'AMQP_CHANNEL')
+            App.emit('errorLog', error, ReasonError.AMQP_CHANNEL)
         })
 
         ch.on('close', function () {
@@ -241,7 +241,7 @@ export function sendingMsg(App, msg: string, doc) {
 function closeOnErr(error, App) {
     if (!error || !conn) return false
 
-    App.emit('errorLog', error, 'AMQP')
+    App.emit('errorLog', error, ReasonError.AMQP)
     conn.close()
 
     return true

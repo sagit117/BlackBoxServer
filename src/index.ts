@@ -10,7 +10,7 @@ import {
     HttpValidationErrorException,
 } from './dataClasses/httpErrors'
 import { StatusCode } from './controllers/baseController/base-controller'
-import { EventName } from './emitters/emitters'
+import { EventName, ReasonError } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
 import { getConfig } from './utils'
@@ -156,7 +156,7 @@ export function onErrorAfterResponse(
     _next: NextFunction
 ) {
     if (error instanceof SyntaxError)
-        BlackBoxApp.emit('errorLog', error, 'CONTROLLER')
+        BlackBoxApp.emit('errorLog', error, ReasonError.CONTROLLER)
 }
 
 /**
@@ -206,7 +206,7 @@ export function onErrorRequest(
     response: Response,
     _next: NextFunction
 ) {
-    BlackBoxApp.emit('errorLog', error, 'REQUEST')
+    BlackBoxApp.emit('errorLog', error, ReasonError.REQUEST)
 
     if (error instanceof URIError) {
         return response.status(StatusCode.BAD_REQUEST).send('oops ...')

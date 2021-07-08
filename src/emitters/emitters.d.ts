@@ -8,3 +8,11 @@ export const enum EventName {
     AMQP_CHANNEL_IS_CLOSED = 'AMQP_CHANNEL_IS_CLOSED',
     AMQP_WORKER_IS_STARTED = 'AMQP_WORKER_IS_STARTED',
 }
+
+export const enum ReasonError {
+    REQUEST = 'REQUEST',
+    AMQP = 'AMQP',
+    AMQP_CHANNEL = 'AMQP_CHANNEL',
+    SOCKET = 'SOCKET',
+    CONTROLLER = 'CONTROLLER',
+}

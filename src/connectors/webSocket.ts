@@ -5,7 +5,8 @@ import WebSocket, {
 } from 'ws'
 import http from 'http'
 import https from 'https'
-import {BlackBoxApp} from "../index";
+import { BlackBoxApp } from '../index'
+import { ReasonError } from '../emitters/emitters'
 
 export let webSocketServer: WebSocket.Server | null = null
 
@@ -41,7 +42,7 @@ export function createWebSocket(options: IOptions) {
         })
 
         ws.on('error', (e) => {
-            BlackBoxApp.emit('errorLog', e, 'SOCKET')
+            BlackBoxApp.emit('errorLog', e, ReasonError.SOCKET)
             ws.send(e)
         })
 

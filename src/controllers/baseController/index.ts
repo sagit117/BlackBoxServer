@@ -6,6 +6,7 @@ import {
     HttpValidationErrorException,
 } from '../../dataClasses/httpErrors'
 import { BlackBoxApp } from '../../index'
+import { ReasonError } from '../../emitters/emitters'
 
 /**
  * Базовый класс для контроллера
@@ -42,7 +43,7 @@ export default class BaseController {
                 this.render(result, StatusCode.OK)
             })
             .catch((error: Error) => {
-                BlackBoxApp.emit('errorLog', error, 'REQUEST')
+                BlackBoxApp.emit('errorLog', error, ReasonError.REQUEST)
 
                 if (error.name === 'ValidationError') {
                     throw new HttpValidationErrorException(

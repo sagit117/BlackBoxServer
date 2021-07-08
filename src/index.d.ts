@@ -17,6 +17,29 @@ export const enum BlackBoxEventName {
     AMQP_WORKER_IS_STARTED = 'AMQP_WORKER_IS_STARTED',
 }
 
+/**
+ * Перечисления кодов ответа сервера
+ */
+export const enum BlackBoxStatusCode {
+    OK = 200,
+    BAD_REQUEST = 400,
+    UNAUTHORIZED = 401,
+    FORBIDDEN = 403,
+    NOT_FOUND = 404,
+    INTERNAL_SERVER_ERROR = 500,
+}
+
+/**
+ * Перечисления причин ошибок
+ */
+export const enum BlackBoxReasonErro {
+    REQUEST = 'REQUEST',
+    AMQP = 'AMQP',
+    AMQP_CHANNEL = 'AMQP_CHANNEL',
+    SOCKET = 'SOCKET',
+    CONTROLLER = 'CONTROLLER',
+}
+
 // ==== Сущности ====
 
 /**

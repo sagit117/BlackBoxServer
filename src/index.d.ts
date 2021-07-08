@@ -1,4 +1,5 @@
 import { Express, NextFunction, Request, Response, Router } from 'express'
+import { Model, Query, UpdateWriteOpResult } from 'mongoose'
 
 export interface BlackBoxApp extends Express {}
 
@@ -63,6 +64,67 @@ class HttpValidationErrorException extends HttpErrors {
 }
 
 /**
+ * Базовый класс для сервиса
+ */
+export default class BaseServiceModel {
+    readonly Model: Model<any>
+
+    constructor(model: Model<any>)
+
+    /**
+     * Найти все записи модели
+     */
+    findAll<T>(): Query<T[], any, {}>
+
+    /**
+     * Поиск записей по одному полю
+     * @param fieldName - название поля
+     * @param value     - значение поля
+     */
+    findByOneField<T>(
+        fieldName: string,
+        value: string | number | null | boolean
+    ): Query<T[], any, {}>
+
+    /**
+     * Найти последнюю запись
+     */
+    findLast<T>(limit: number = 1): Query<T[], any, {}>
+
+    /**
+     * Создание записи
+     * @param data  - данные записи
+     */
+    create<T>(data: T)
+
+    /**
+     * Создание или обновление записи
+     * @param data - данные записи
+     */
+    createOrUpdateById<T extends { _id: string }>(data: T): Query<UpdateWriteOpResult, T, {}, any>
+
+    /**
+     * Обновить одну запись по фильтру
+     * @param filter
+     * @param data
+     */
+    updateOneByFilter<T>(filter: object, data: T): Query<UpdateWriteOpResult, T, {}, any>
+
+    /**
+     * Удаление записи
+     * @param filter
+     */
+    remove(filter: object): Query<
+        { ok?: number | undefined; n?: number | undefined }
+        & {
+        deletedCount?: number | undefined
+    },
+        any,
+        {}
+        >
+}
+
+/**
  * Роутер
  * @constructor
  */
@@ -79,6 +141,12 @@ export function BlackBoxBaseController(): typeof BlackBoxBaseController
  * @constructor
  */
 export function BlackBoxHttpValidationErrorException(): typeof HttpValidationErrorException
+
+/**
+ * Базовый сервис
+ * @constructor
+ */
+export function BlackBoxBaseServiceModel(): typeof BaseServiceModel
 
 // ==== Функции ====
 

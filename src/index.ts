@@ -19,6 +19,7 @@ import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
 import { THeader } from './utils/utils'
+import BaseServiceModel from './services/baseServiceModel'
 
 export const BlackBoxApp = Express()
 /**
@@ -180,6 +181,14 @@ export function BlackBoxBaseController() {
  */
 export function BlackBoxHttpValidationErrorException() {
     return HttpValidationErrorException
+}
+
+/**
+ * Базовый класс для сервиса
+ * @constructor
+ */
+export function BlackBoxBaseServiceModel() {
+    return BaseServiceModel
 }
 
 /** Служебные функции */

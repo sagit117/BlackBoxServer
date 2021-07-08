@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.onErrorRequest = exports.BlackBoxHttpValidationErrorException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpValidationErrorException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -16,6 +16,7 @@ const utils_1 = require("./utils");
 const server_1 = require("./server");
 const http_1 = __importDefault(require("http"));
 const baseController_1 = __importDefault(require("./controllers/baseController"));
+const baseServiceModel_1 = __importDefault(require("./services/baseServiceModel"));
 exports.BlackBoxApp = express_1.default();
 function createApp(env) {
     exports.BlackBoxApp.use(compression_1.default());
@@ -83,6 +84,10 @@ function BlackBoxHttpValidationErrorException() {
     return httpErrors_1.HttpValidationErrorException;
 }
 exports.BlackBoxHttpValidationErrorException = BlackBoxHttpValidationErrorException;
+function BlackBoxBaseServiceModel() {
+    return baseServiceModel_1.default;
+}
+exports.BlackBoxBaseServiceModel = BlackBoxBaseServiceModel;
 function onErrorRequest(error, _request, response, _next) {
     exports.BlackBoxApp.emit('errorLog', error, 'REQUEST');
     if (error instanceof URIError) {

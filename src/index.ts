@@ -6,8 +6,9 @@ import { errorLog, errorPromiseLog, eventLog } from './emitters'
 import { warnMsg } from './utils/log-colors'
 import {
     HttpInternalServerException,
+    HttpTooManyRequests,
     HttpUnauthorizedException,
-    HttpValidationErrorException,
+    HttpValidationException,
 } from './dataClasses/httpErrors'
 import { StatusCode } from './controllers/baseController/base-controller'
 import { EventName, ReasonError } from './emitters/emitters'
@@ -72,7 +73,7 @@ export function createApp(env: NodeJS.ProcessEnv) {
             reason.response
                 .status(StatusCode.INTERNAL_SERVER_ERROR)
                 .send(reason.message)
-        } else if (reason instanceof HttpValidationErrorException) {
+        } else if (reason instanceof HttpValidationException) {
             reason.response.status(StatusCode.BAD_REQUEST).send(reason.message)
         }
 
@@ -177,8 +178,16 @@ export function BlackBoxBaseController() {
  * Класс ошибок валидации
  * @constructor
  */
-export function BlackBoxHttpValidationErrorException() {
-    return HttpValidationErrorException
+export function BlackBoxHttpValidationException() {
+    return HttpValidationException
+}
+
+/**
+ * Класс ошибок большого количества запросов
+ * @constructor
+ */
+export function BlackBoxHttpTooManyRequests() {
+    return HttpTooManyRequests
 }
 
 /**
@@ -214,8 +223,12 @@ export function onErrorRequest(
         return response.status(StatusCode.UNAUTHORIZED).send(error.message)
     }
 
-    if (error instanceof HttpValidationErrorException) {
+    if (error instanceof HttpValidationException) {
         return response.status(StatusCode.BAD_REQUEST).send(error.message)
+    }
+
+    if (error instanceof HttpTooManyRequests) {
+        return response.send(error.message)
     }
 
     return response.status(StatusCode.INTERNAL_SERVER_ERROR).send(error.message)

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpValidationErrorException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -41,7 +41,7 @@ function createApp(env) {
                 .status(500)
                 .send(reason.message);
         }
-        else if (reason instanceof httpErrors_1.HttpValidationErrorException) {
+        else if (reason instanceof httpErrors_1.HttpValidationException) {
             reason.response.status(400).send(reason.message);
         }
         exports.BlackBoxApp.emit('errorPromiseLog', reason, promise);
@@ -80,10 +80,14 @@ function BlackBoxBaseController() {
     return baseController_1.default;
 }
 exports.BlackBoxBaseController = BlackBoxBaseController;
-function BlackBoxHttpValidationErrorException() {
-    return httpErrors_1.HttpValidationErrorException;
+function BlackBoxHttpValidationException() {
+    return httpErrors_1.HttpValidationException;
 }
-exports.BlackBoxHttpValidationErrorException = BlackBoxHttpValidationErrorException;
+exports.BlackBoxHttpValidationException = BlackBoxHttpValidationException;
+function BlackBoxHttpTooManyRequests() {
+    return httpErrors_1.HttpTooManyRequests;
+}
+exports.BlackBoxHttpTooManyRequests = BlackBoxHttpTooManyRequests;
 function BlackBoxBaseServiceModel() {
     return baseServiceModel_1.default;
 }
@@ -96,8 +100,11 @@ function onErrorRequest(error, _request, response, _next) {
     if (error instanceof httpErrors_1.HttpUnauthorizedException) {
         return response.status(401).send(error.message);
     }
-    if (error instanceof httpErrors_1.HttpValidationErrorException) {
+    if (error instanceof httpErrors_1.HttpValidationException) {
         return response.status(400).send(error.message);
+    }
+    if (error instanceof httpErrors_1.HttpTooManyRequests) {
+        return response.send(error.message);
     }
     return response.status(500).send(error.message);
 }

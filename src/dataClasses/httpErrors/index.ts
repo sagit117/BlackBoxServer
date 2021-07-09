@@ -1,4 +1,5 @@
 import { Response } from 'express'
+import { StatusCode } from '../../controllers/baseController/base-controller'
 
 /**
  * Базовый класс для ошибок
@@ -34,14 +35,28 @@ export class HttpInternalServerException extends HttpErrors {
 }
 
 /**
- * Ошибка валидации данных при сохранение в БД
+ * Ошибка валидации данных
  */
-export class HttpValidationErrorException extends HttpErrors {
+export class HttpValidationException extends HttpErrors {
     readonly response: Response
 
     constructor(message: string, response: Response) {
-        super('HttpValidationErrorException')
+        super('HttpValidationException')
         this.message = message
         this.response = response
+    }
+}
+
+/**
+ * Слишком много запросов
+ */
+export class HttpTooManyRequests extends HttpErrors {
+    readonly response: Response
+
+    constructor(message: string, response: Response) {
+        super('HttpTooManyRequests')
+        this.message = message
+        this.response = response
+        this.response.status(StatusCode.TOO_MANY_REQUESTS)
     }
 }

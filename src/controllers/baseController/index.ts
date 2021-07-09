@@ -3,7 +3,7 @@ import { StatusCode } from './base-controller'
 import { Query } from 'mongoose'
 import {
     HttpInternalServerException,
-    HttpValidationErrorException,
+    HttpValidationException,
 } from '../../dataClasses/httpErrors'
 import { BlackBoxApp } from '../../index'
 import { ReasonError } from '../../emitters/emitters'
@@ -46,13 +46,13 @@ export default class BaseController {
                 BlackBoxApp.emit('errorLog', error, ReasonError.REQUEST)
 
                 if (error.name === 'ValidationError') {
-                    throw new HttpValidationErrorException(
+                    throw new HttpValidationException(
                         'Данные не проходят проверку',
                         this.response
                     )
                 }
 
-                if (error.name === 'HttpValidationErrorException') {
+                if (error.name === 'HttpValidationException') {
                     throw error
                 }
 

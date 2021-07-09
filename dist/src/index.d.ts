@@ -26,6 +26,7 @@ export const enum BlackBoxStatusCode {
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
     NOT_FOUND = 404,
+    TOO_MANY_REQUESTS = 429,
     INTERNAL_SERVER_ERROR = 500,
 }
 
@@ -80,7 +81,16 @@ class HttpErrors extends Error {
 /**
  * Класс ошибки валидации
  */
-class HttpValidationErrorException extends HttpErrors {
+class HttpValidationException extends HttpErrors {
+    readonly response: Response
+
+    constructor(message: string, response: Response)
+}
+
+/**
+ * Слишком много запросов
+ */
+export class HttpTooManyRequests extends HttpErrors {
     readonly response: Response
 
     constructor(message: string, response: Response)
@@ -163,7 +173,13 @@ export function BlackBoxBaseController(): typeof BlackBoxBaseController
  * Класс ошибок валидации
  * @constructor
  */
-export function BlackBoxHttpValidationErrorException(): typeof HttpValidationErrorException
+export function BlackBoxHttpValidationException(): typeof HttpValidationException
+
+/**
+ * Класс ошибок с большим количеством запросов
+ * @constructor
+ */
+export function BlackBoxHttpTooManyRequests(): typeof HttpTooManyRequests
 
 /**
  * Базовый сервис

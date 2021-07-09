@@ -16,9 +16,9 @@ class BaseController {
             .catch((error) => {
             index_1.BlackBoxApp.emit('errorLog', error, "REQUEST");
             if (error.name === 'ValidationError') {
-                throw new httpErrors_1.HttpValidationErrorException('Данные не проходят проверку', this.response);
+                throw new httpErrors_1.HttpValidationException('Данные не проходят проверку', this.response);
             }
-            if (error.name === 'HttpValidationErrorException') {
+            if (error.name === 'HttpValidationException') {
                 throw error;
             }
             throw new httpErrors_1.HttpInternalServerException('Произошла внутренняя ошибка сервера', this.response);

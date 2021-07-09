@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.HttpValidationErrorException = exports.HttpInternalServerException = exports.HttpUnauthorizedException = void 0;
+exports.HttpTooManyRequests = exports.HttpValidationException = exports.HttpInternalServerException = exports.HttpUnauthorizedException = void 0;
 class HttpErrors extends Error {
     constructor(name) {
         super();
@@ -22,11 +22,20 @@ class HttpInternalServerException extends HttpErrors {
     }
 }
 exports.HttpInternalServerException = HttpInternalServerException;
-class HttpValidationErrorException extends HttpErrors {
+class HttpValidationException extends HttpErrors {
     constructor(message, response) {
-        super('HttpValidationErrorException');
+        super('HttpValidationException');
         this.message = message;
         this.response = response;
     }
 }
-exports.HttpValidationErrorException = HttpValidationErrorException;
+exports.HttpValidationException = HttpValidationException;
+class HttpTooManyRequests extends HttpErrors {
+    constructor(message, response) {
+        super('HttpTooManyRequests');
+        this.message = message;
+        this.response = response;
+        this.response.status(429);
+    }
+}
+exports.HttpTooManyRequests = HttpTooManyRequests;

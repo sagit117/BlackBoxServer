@@ -15,7 +15,6 @@ import { EventName, ReasonError } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
 import { getConfig } from './utils'
-// import { clientRequest } from './server-types'
 import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
@@ -71,11 +70,9 @@ export function createApp(env: NodeJS.ProcessEnv) {
          * Обработка ошибок специальных исключений
          */
         if (reason instanceof HttpInternalServerException) {
-            reason.response
-                .status(StatusCode.INTERNAL_SERVER_ERROR)
-                .send(reason.message)
+            reason.response.send(reason.message)
         } else if (reason instanceof HttpValidationException) {
-            reason.response.status(StatusCode.BAD_REQUEST).send(reason.message)
+            reason.response.send(reason.message)
         }
 
         BlackBoxApp.emit('errorPromiseLog', reason, promise)

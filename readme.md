@@ -41,6 +41,12 @@
 }
 ```
 
+#### Функция для чтение настроек
+
+```typescript
+export function BlackBoxGetConfig<T>(): T
+```
+
 ### Подключение основного модуля сервера
 
 ```js
@@ -101,7 +107,12 @@ App.emit('eventLog', 'EVENT', 'Message')
 ### Маршрутизация
 
 ```js
-import { createApp, notFound, onErrorAfterResponse, onErrorRequest } from 'blackbox_server'
+import {
+    createApp,
+    notFound,
+    onErrorAfterResponse,
+    onErrorRequest,
+} from 'blackbox_server'
 
 /**
  * Обработка маршрутов
@@ -121,23 +132,13 @@ App.use(onErrorAfterResponse)
 ### Подключение роутера
 
 ```js
-import {
-    BlackBoxRouter,
-    TBlackBoxNextFunction,
-    TBlackBoxResponse,
-    TBlackBoxRequest,
-} from 'blackbox_server'
+import { BlackBoxRouter } from 'blackbox_server'
 import Controller from '../../controllers/LoginController'
 
 const Router = BlackBoxRouter()
 
-Router.post(
-    '/v1/get-token',
-    (
-        request: TBlackBoxRequest,
-        response: TBlackBoxResponse,
-        next: TBlackBoxNextFunction
-    ) => new Controller(request, response, next).getToken()
+Router.post('/v1/get-token', (request, response, next) =>
+    new Controller(request, response, next).getToken()
 )
 
 export default Router
@@ -146,19 +147,10 @@ export default Router
 ### Подключение контроллера
 
 ```js
-import {
-    BlackBoxBaseController,
-    TBlackBoxRequest,
-    TBlackBoxResponse,
-    TBlackBoxNextFunction,
-} from 'blackbox_server'
+import { BlackBoxBaseController } from 'blackbox_server'
 
 export default class LoginController extends BlackBoxBaseController() {
-    constructor(
-        request: TBlackBoxRequest,
-        response: TBlackBoxResponse,
-        _next: TBlackBoxNextFunction
-    ) {
+    constructor(request, response, _next) {
         super(request, response)
     }
 
@@ -169,9 +161,7 @@ export default class LoginController extends BlackBoxBaseController() {
 ### Работа с ошибками в запросах
 
 ```js
-import {
-    BlackBoxHttpValidationErrorException,
-} from 'blackbox_server'
+import { BlackBoxHttpValidationErrorException } from 'blackbox_server'
 
 // валидация email
 if (!testEmail(userData?.email)) {

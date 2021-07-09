@@ -102,9 +102,7 @@ export function createApp(env: NodeJS.ProcessEnv) {
      * Обработчики http запросов
      */
     // лог
-    BlackBoxApp.use((request, _response: Response, next: NextFunction) =>
-        onRequest(request as clientRequest, _response, next)
-    )
+    BlackBoxApp.use(onRequest)
 
     /**
      * Установка заголовков ответа

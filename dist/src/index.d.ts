@@ -185,7 +185,18 @@ export function createApp(env: {
 /**
  * Типы аргументов для функций запросов
  */
-export type TBlackBoxRequest = Request
+export interface TBlackBoxRequest extends Request {
+    ClientInfo: {
+        readonly connectDate: Date
+        requestUrl: string
+        requestMethod: string
+        requestCookies: string
+        requestSignedCookies: string
+        requestIP: string
+        body: object
+        queryParams: object
+    }
+}
 export type TBlackBoxResponse = Response
 export type TBlackBoxNextFunction = NextFunction
 
@@ -204,9 +215,9 @@ export function BlackBoxGetConfig<T>(): T
  * @param _next
  */
 export function notFound(
-    _request: TBlackBoxRequest,
-    response: TBlackBoxResponse,
-    _next: TBlackBoxNextFunction
+    _request: Request,
+    response: Response,
+    _next: NextFunction
 ): Response<any, Record<string, any>>
 
 /**
@@ -218,9 +229,9 @@ export function notFound(
  */
 export function onErrorAfterResponse(
     error: Error,
-    _request: TBlackBoxRequest,
-    _response: TBlackBoxResponse,
-    _next: NextFuncTBlackBoxNextFunctiontion
+    _request: Request,
+    _response: Response,
+    _next: NextFunction
 ): void
 
 /**

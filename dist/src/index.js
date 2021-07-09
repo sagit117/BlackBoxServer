@@ -53,7 +53,7 @@ function createApp(env) {
             process.exit(0);
         });
     });
-    exports.BlackBoxApp.use((request, _response, next) => onRequest(request, _response, next));
+    exports.BlackBoxApp.use(onRequest);
     exports.BlackBoxApp.use(setHeader);
     exports.BlackBoxApp.get('/_ping', ping);
     exports.BlackBoxApp.get('/healthcheck', healthCheck);

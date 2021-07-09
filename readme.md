@@ -160,12 +160,14 @@ export default class LoginController extends BlackBoxBaseController() {
 
 ### Работа с ошибками в запросах
 
+#### все возможные классы ошибок указаны в index.d.ts
+
 ```js
-import { BlackBoxHttpValidationErrorException } from 'blackbox_server'
+import { BlackBoxHttpValidationException } from 'blackbox_server'
 
 // валидация email
 if (!testEmail(userData?.email)) {
-    const error = BlackBoxHttpValidationErrorException()
+    const error = BlackBoxHttpValidationException()
 
     throw new error('Ошибка валидации email', this.response)
 }
@@ -195,6 +197,7 @@ enum BlackBoxStatusCode {
     UNAUTHORIZED = 401,
     FORBIDDEN = 403,
     NOT_FOUND = 404,
+    TOO_MANY_REQUESTS = 429,
     INTERNAL_SERVER_ERROR = 500,
 }
 ```

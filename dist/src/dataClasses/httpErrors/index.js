@@ -8,9 +8,11 @@ class HttpErrors extends Error {
     }
 }
 class HttpUnauthorizedException extends HttpErrors {
-    constructor(message) {
+    constructor(message, response) {
         super('HttpUnauthorizedException');
         this.message = message;
+        this.response = response;
+        this.response.status(401);
     }
 }
 exports.HttpUnauthorizedException = HttpUnauthorizedException;
@@ -19,6 +21,7 @@ class HttpInternalServerException extends HttpErrors {
         super('HttpInternalServerException');
         this.message = message;
         this.response = response;
+        this.response.status(500);
     }
 }
 exports.HttpInternalServerException = HttpInternalServerException;
@@ -27,6 +30,7 @@ class HttpValidationException extends HttpErrors {
         super('HttpValidationException');
         this.message = message;
         this.response = response;
+        this.response.status(400);
     }
 }
 exports.HttpValidationException = HttpValidationException;

@@ -15,9 +15,13 @@ class HttpErrors extends Error {
  * Ошибка авторизации
  */
 export class HttpUnauthorizedException extends HttpErrors {
-    constructor(message: string) {
+    readonly response: Response
+
+    constructor(message: string, response: Response) {
         super('HttpUnauthorizedException')
         this.message = message
+        this.response = response
+        this.response.status(StatusCode.UNAUTHORIZED)
     }
 }
 
@@ -31,6 +35,7 @@ export class HttpInternalServerException extends HttpErrors {
         super('HttpInternalServerException')
         this.message = message
         this.response = response
+        this.response.status(StatusCode.INTERNAL_SERVER_ERROR)
     }
 }
 
@@ -44,6 +49,7 @@ export class HttpValidationException extends HttpErrors {
         super('HttpValidationException')
         this.message = message
         this.response = response
+        this.response.status(StatusCode.BAD_REQUEST)
     }
 }
 

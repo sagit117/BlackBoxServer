@@ -98,10 +98,10 @@ function onErrorRequest(error, _request, response, _next) {
         return response.status(400).send('oops ...');
     }
     if (error instanceof httpErrors_1.HttpUnauthorizedException) {
-        return response.status(401).send(error.message);
+        return response.send(error.message);
     }
     if (error instanceof httpErrors_1.HttpValidationException) {
-        return response.status(400).send(error.message);
+        return response.send(error.message);
     }
     if (error instanceof httpErrors_1.HttpTooManyRequests) {
         return response.send(error.message);

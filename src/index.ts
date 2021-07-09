@@ -220,11 +220,11 @@ export function onErrorRequest(
     }
 
     if (error instanceof HttpUnauthorizedException) {
-        return response.status(StatusCode.UNAUTHORIZED).send(error.message)
+        return response.send(error.message)
     }
 
     if (error instanceof HttpValidationException) {
-        return response.status(StatusCode.BAD_REQUEST).send(error.message)
+        return response.send(error.message)
     }
 
     if (error instanceof HttpTooManyRequests) {

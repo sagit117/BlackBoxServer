@@ -21,6 +21,7 @@ import http from 'http'
 import BaseController from './controllers/baseController'
 import { IConfigApp, THeader } from './utils/utils'
 import BaseServiceModel from './services/baseServiceModel'
+import { checkAccessIP } from './decorators'
 
 export const BlackBoxApp = Express()
 /**
@@ -316,3 +317,7 @@ function setHeader(_request: Request, response: Response, next: NextFunction) {
 
     next()
 }
+
+/** Декораторы */
+
+export const checkAccessIp = checkAccessIP

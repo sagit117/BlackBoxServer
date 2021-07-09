@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -17,6 +17,7 @@ const server_1 = require("./server");
 const http_1 = __importDefault(require("http"));
 const baseController_1 = __importDefault(require("./controllers/baseController"));
 const baseServiceModel_1 = __importDefault(require("./services/baseServiceModel"));
+const decorators_1 = require("./decorators");
 exports.BlackBoxApp = express_1.default();
 function createApp(env) {
     exports.BlackBoxApp.use(compression_1.default());
@@ -140,3 +141,4 @@ function setHeader(_request, response, next) {
     }
     next();
 }
+exports.checkAccessIp = decorators_1.checkAccessIP;

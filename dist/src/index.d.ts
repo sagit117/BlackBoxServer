@@ -1,5 +1,6 @@
 import { Express, NextFunction, Request, Response, Router } from 'express'
 import { Model, Query, UpdateWriteOpResult } from 'mongoose'
+import { checkAccessIP } from './decorators'
 
 export interface BlackBoxApp extends Express {}
 
@@ -263,4 +264,13 @@ export function onErrorRequest(
     response: Response,
     _next: NextFunction
 ): Response<any, Record<string, any>>
+
+/** Декораторы */
+
+/**
+ * Декоратор для проверки количества вызовов метода с одного IP
+ * @param maxStack - количество запросов
+ * @param timeLifeStack - интервал жизни очереди
+ */
+export const checkAccessIp = checkAccessIP
 

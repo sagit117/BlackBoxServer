@@ -272,5 +272,5 @@ export function onErrorRequest(
  * @param maxStack - количество запросов
  * @param timeLifeStack - интервал жизни очереди
  */
-export const checkAccessIp = checkAccessIP
+export function checkAccessIp(maxStack: number, timeLifeStack: number)
 

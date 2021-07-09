@@ -213,3 +213,27 @@ enum BlackBoxReasonErro {
     CONTROLLER = 'CONTROLLER',
 }
 ```
+
+### Использование декораторов
+
+#### все возможные декораторы указаны в index.d.ts
+
+```typescript
+import {
+    BlackBoxBaseController,
+    checkAccessIp,
+} from 'blackbox_server'
+
+export default class UsersController extends BlackBoxBaseController() {
+    constructor(request, response, next) {
+        super(request, response, next)
+    }
+
+    /**
+     * Регистрация пользователя по email
+     */
+    @checkAccessIp(5, 60000)
+    registrationByEmail() {
+    }
+}
+```

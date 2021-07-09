@@ -14,7 +14,7 @@ import { EventName, ReasonError } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
 import { getConfig } from './utils'
-import { clientRequest } from './server-types'
+// import { clientRequest } from './server-types'
 import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
@@ -235,11 +235,7 @@ export function BlackBoxGetConfig(): IConfigApp {
  * @param _response
  * @param next
  */
-function onRequest(
-    request: clientRequest,
-    _response: Response,
-    next: NextFunction
-) {
+function onRequest(request: Request, _response: Response, next: NextFunction) {
     const clientInfo = new ClientInfo(request)
 
     request.ClientInfo = clientInfo.toObject()

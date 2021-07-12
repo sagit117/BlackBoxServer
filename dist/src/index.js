@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpInternalServerException = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -15,8 +15,6 @@ const statusAppConnect_1 = __importDefault(require("./dataClasses/statusAppConne
 const utils_1 = require("./utils");
 const server_1 = require("./server");
 const http_1 = __importDefault(require("http"));
-const baseController_1 = __importDefault(require("./controllers/baseController"));
-const baseServiceModel_1 = __importDefault(require("./services/baseServiceModel"));
 const decorators_1 = require("./decorators");
 exports.BlackBoxApp = express_1.default();
 function createApp(env) {
@@ -75,26 +73,6 @@ function BlackBoxRouter() {
     return express_1.default.Router();
 }
 exports.BlackBoxRouter = BlackBoxRouter;
-function BlackBoxBaseController() {
-    return baseController_1.default;
-}
-exports.BlackBoxBaseController = BlackBoxBaseController;
-function BlackBoxHttpValidationException() {
-    return httpErrors_1.HttpValidationException;
-}
-exports.BlackBoxHttpValidationException = BlackBoxHttpValidationException;
-function BlackBoxHttpTooManyRequests() {
-    return httpErrors_1.HttpTooManyRequests;
-}
-exports.BlackBoxHttpTooManyRequests = BlackBoxHttpTooManyRequests;
-function BlackBoxHttpInternalServerException() {
-    return httpErrors_1.HttpInternalServerException;
-}
-exports.BlackBoxHttpInternalServerException = BlackBoxHttpInternalServerException;
-function BlackBoxBaseServiceModel() {
-    return baseServiceModel_1.default;
-}
-exports.BlackBoxBaseServiceModel = BlackBoxBaseServiceModel;
 function onErrorRequest(error, _request, response, _next) {
     exports.BlackBoxApp.emit('errorLog', error, "REQUEST");
     if (error instanceof URIError) {

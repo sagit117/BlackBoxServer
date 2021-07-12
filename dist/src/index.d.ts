@@ -48,7 +48,7 @@ export const enum BlackBoxReasonErro {
 /**
  * Базовый контроллер
  */
-class BlackBoxBaseController {
+export class BlackBoxBaseController {
     request: Request
     response: Response
     next: NextFunction | null
@@ -76,14 +76,14 @@ class BlackBoxBaseController {
 /**
  * Базовый класс для ошибок
  */
-class HttpErrors extends Error {
+export class HttpErrors extends Error {
     constructor(name: string)
 }
 
 /**
  * Класс ошибки валидации
  */
-class HttpValidationException extends HttpErrors {
+export class HttpValidationException extends HttpErrors {
     readonly response: Response
 
     constructor(message: string, response: Response)
@@ -111,7 +111,7 @@ export class HttpInternalServerException extends HttpErrors {
 /**
  * Базовый класс для сервиса
  */
-export default class BaseServiceModel {
+export class BaseServiceModel {
     readonly Model: Model<any>
 
     constructor(model: Model<any>)
@@ -130,6 +130,16 @@ export default class BaseServiceModel {
         fieldName: string,
         value: string | number | null | boolean
     ): Query<T[], any, {}>
+
+    /**
+    * Поиск последней записи по полю
+    * @param fieldName - название поля
+    * @param value     - значение поля
+    */
+    findLastByOneField<T>(
+        fieldName: string,
+        value: string | number | null | boolean
+    ): Query<T, any, {}, any>
 
     /**
      * Найти последнюю запись
@@ -179,31 +189,31 @@ export function BlackBoxRouter(): Router
  * Базовый контроллер
  * @constructor
  */
-export function BlackBoxBaseController(): typeof BlackBoxBaseController
+// export function BlackBoxBaseController(): typeof BlackBoxBaseController
 
 /**
  * Класс ошибок валидации
  * @constructor
  */
-export function BlackBoxHttpValidationException(): typeof HttpValidationException
+// export function BlackBoxHttpValidationException(): typeof HttpValidationException
 
 /**
  * Класс ошибок с большим количеством запросов
  * @constructor
  */
-export function BlackBoxHttpTooManyRequests(): typeof HttpTooManyRequests
+// export function BlackBoxHttpTooManyRequests(): typeof HttpTooManyRequests
 
 /**
  * Класс внутренних ошибок сервера
  * @constructor
  */
-export function BlackBoxHttpInternalServerException(): typeof HttpInternalServerException
+// export function BlackBoxHttpInternalServerException(): typeof HttpInternalServerException
 
 /**
  * Базовый сервис
  * @constructor
  */
-export function BlackBoxBaseServiceModel(): typeof BaseServiceModel
+// export function BlackBoxBaseServiceModel(): typeof BaseServiceModel
 
 // ==== Функции ====
 

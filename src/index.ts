@@ -17,9 +17,9 @@ import StatusAppConnect from './dataClasses/statusAppConnect'
 import { getConfig } from './utils'
 import { serverStart } from './server'
 import http from 'http'
-import BaseController from './controllers/baseController'
+// import BaseController from './controllers/baseController'
 import { IConfigApp, THeader } from './utils/utils'
-import BaseServiceModel from './services/baseServiceModel'
+// import BaseServiceModel from './services/baseServiceModel'
 import { checkAccessIP } from './decorators'
 
 export const BlackBoxApp = Express()
@@ -168,41 +168,41 @@ export function BlackBoxRouter() {
  * Базовый контроллер
  * @constructor
  */
-export function BlackBoxBaseController() {
-    return BaseController
-}
+// export function BlackBoxBaseController() {
+//     return BaseController
+// }
 
 /**
  * Класс ошибок валидации
  * @constructor
  */
-export function BlackBoxHttpValidationException() {
-    return HttpValidationException
-}
+// export function BlackBoxHttpValidationException() {
+//     return HttpValidationException
+// }
 
 /**
  * Класс ошибок большого количества запросов
  * @constructor
  */
-export function BlackBoxHttpTooManyRequests() {
-    return HttpTooManyRequests
-}
+// export function BlackBoxHttpTooManyRequests() {
+//     return HttpTooManyRequests
+// }
 
 /**
  * Класс внутренних ошибок сервера
  * @constructor
  */
-export function BlackBoxHttpInternalServerException() {
-    return HttpInternalServerException
-}
+// export function BlackBoxHttpInternalServerException() {
+//     return HttpInternalServerException
+// }
 
 /**
  * Базовый класс для сервиса
  * @constructor
  */
-export function BlackBoxBaseServiceModel() {
-    return BaseServiceModel
-}
+// export function BlackBoxBaseServiceModel() {
+//     return BaseServiceModel
+// }
 
 /** Служебные функции */
 

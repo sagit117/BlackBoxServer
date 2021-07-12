@@ -1,6 +1,7 @@
 import { Express, NextFunction, Request, Response, Router } from 'express'
 import { Model, Query, UpdateWriteOpResult } from 'mongoose'
 import { checkAccessIP } from './decorators'
+import { StatusCode } from './controllers/baseController/base-controller'
 
 export interface BlackBoxApp extends Express {}
 
@@ -98,6 +99,16 @@ export class HttpTooManyRequests extends HttpErrors {
 }
 
 /**
+ * Веутреня ошибка сервера
+ */
+export class HttpInternalServerException extends HttpErrors {
+    readonly response: Response
+
+    constructor(message: string, response: Response)
+}
+
+
+/**
  * Базовый класс для сервиса
  */
 export default class BaseServiceModel {
@@ -181,6 +192,12 @@ export function BlackBoxHttpValidationException(): typeof HttpValidationExceptio
  * @constructor
  */
 export function BlackBoxHttpTooManyRequests(): typeof HttpTooManyRequests
+
+/**
+ * Класс внутренних ошибок сервера
+ * @constructor
+ */
+export function BlackBoxHttpInternalServerException(): typeof HttpInternalServerException
 
 /**
  * Базовый сервис

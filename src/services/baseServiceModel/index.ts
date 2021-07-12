@@ -29,6 +29,13 @@ export default class BaseServiceModel {
         return this.Model.find({ [fieldName]: value })
     }
 
+    findLastByOneField<T>(
+        fieldName: string,
+        value: string | number | null | boolean
+    ): Query<T[], any, {}> {
+        return this.Model.findOne({ [fieldName]: value }).sort({ _id: -1 })
+    }
+
     /**
      * Найти последнюю запись
      */

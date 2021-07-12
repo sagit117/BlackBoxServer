@@ -189,6 +189,14 @@ export function BlackBoxHttpTooManyRequests() {
 }
 
 /**
+ * Класс внутренних ошибок сервера
+ * @constructor
+ */
+export function BlackBoxHttpInternalServerException() {
+    return HttpInternalServerException
+}
+
+/**
  * Базовый класс для сервиса
  * @constructor
  */

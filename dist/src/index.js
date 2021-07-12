@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpInternalServerException = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -38,12 +38,10 @@ function createApp(env) {
     });
     process.on('unhandledRejection', (reason, promise) => {
         if (reason instanceof httpErrors_1.HttpInternalServerException) {
-            reason.response
-                .status(500)
-                .send(reason.message);
+            reason.response.send(reason.message);
         }
         else if (reason instanceof httpErrors_1.HttpValidationException) {
-            reason.response.status(400).send(reason.message);
+            reason.response.send(reason.message);
         }
         exports.BlackBoxApp.emit('errorPromiseLog', reason, promise);
     });
@@ -89,6 +87,10 @@ function BlackBoxHttpTooManyRequests() {
     return httpErrors_1.HttpTooManyRequests;
 }
 exports.BlackBoxHttpTooManyRequests = BlackBoxHttpTooManyRequests;
+function BlackBoxHttpInternalServerException() {
+    return httpErrors_1.HttpInternalServerException;
+}
+exports.BlackBoxHttpInternalServerException = BlackBoxHttpInternalServerException;
 function BlackBoxBaseServiceModel() {
     return baseServiceModel_1.default;
 }

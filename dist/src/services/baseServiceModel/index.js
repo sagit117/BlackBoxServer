@@ -10,6 +10,9 @@ class BaseServiceModel {
     findByOneField(fieldName, value) {
         return this.Model.find({ [fieldName]: value });
     }
+    findLastByOneField(fieldName, value) {
+        return this.Model.findOne({ [fieldName]: value }).sort({ _id: -1 });
+    }
     findLast(limit = 1) {
         return this.Model.find().sort({ _id: -1 }).limit(limit);
     }

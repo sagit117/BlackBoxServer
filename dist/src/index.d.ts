@@ -63,7 +63,8 @@ class BlackBoxBaseController {
      * Обрабатываем запрос к БД и выводим ответ
      * @param promise   - запрос к БД
      */
-    prepareQueryAndSendResponse: (promise: Query<any[], any, {}>) => void
+    prepareQueryAndSendResponse(promise: Query<any[], any, {}>): void
+    prepareQueryAndSendResponse<T>(promise: Query<UpdateWriteOpResult, T, {}, any>): void
 
     /**
      * Отправка данных на фронт
@@ -164,6 +165,7 @@ class BaseServiceModel {
      * @param data
      */
     updateOneByFilter<T>(filter: object, data: T): Query<UpdateWriteOpResult, T, {}, any>
+    updateOneByFilter<T>(filter: object, data: object): Query<UpdateWriteOpResult, T, {}, any>
 
     /**
      * Удаление записи

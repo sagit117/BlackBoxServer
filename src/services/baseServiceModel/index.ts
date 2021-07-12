@@ -1,4 +1,4 @@
-import { Model, Query } from 'mongoose'
+import { Model, Query, UpdateWriteOpResult } from 'mongoose'
 
 /**
  * Базовый класс для сервиса
@@ -73,7 +73,10 @@ export default class BaseServiceModel {
      * @param filter
      * @param data
      */
-    updateOneByFilter<T>(filter: object, data: T) {
+    updateOneByFilter<T>(
+        filter: object,
+        data: object
+    ): Query<UpdateWriteOpResult, T, {}, any> {
         return this.Model.updateOne(filter, data)
     }
 

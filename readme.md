@@ -158,6 +158,22 @@ export default class LoginController extends BlackBoxBaseController() {
 }
 ```
 
+### Подключение сервиса для моделей
+
+```js
+import { BlackBoxBaseServiceModel } from 'blackbox_server'
+import { IUsersModel } from '../../models/UsersModel/users-model'
+import UsersModel from '../../models/UsersModel'
+
+class UsersService extends BlackBoxBaseServiceModel() {
+    constructor(Model: IUsersModel) {
+        super(Model)
+    }
+}
+
+export default new UsersService(UsersModel)
+```
+
 ### Работа с ошибками в запросах
 
 #### все возможные классы ошибок указаны в index.d.ts

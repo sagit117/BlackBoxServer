@@ -113,6 +113,9 @@ function onErrorRequest(error, _request, response, _next) {
     if (error instanceof httpErrors_1.HttpTooManyRequests) {
         return response.send(error.message);
     }
+    if (error instanceof httpErrors_1.HttpUnauthorizedException) {
+        return response.send(error.message);
+    }
     return response.status(500).send(error.message);
 }
 exports.onErrorRequest = onErrorRequest;

@@ -1,6 +1,6 @@
 {
   "name": "blackbox_server",
-  "version": "1.0.39",
+  "version": "1.0.40",
   "description": "service for quickly creating server applications",
   "author": "Pavel Aksenov <sagit117@gmail.com>",
   "main": "dist/src/index.js",

@@ -245,6 +245,10 @@ export function onErrorRequest(
         return response.send(error.message)
     }
 
+    if (error instanceof HttpUnauthorizedException) {
+        return response.send(error.message)
+    }
+
     return response.status(StatusCode.INTERNAL_SERVER_ERROR).send(error.message)
 }
 

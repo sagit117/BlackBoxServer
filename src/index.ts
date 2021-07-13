@@ -197,6 +197,14 @@ export function BlackBoxHttpInternalServerException() {
 }
 
 /**
+ * Класс ошибки авторизации
+ * @constructor
+ */
+export function BlackBoxHttpUnauthorizedException() {
+    return HttpUnauthorizedException
+}
+
+/**
  * Базовый класс для сервиса
  * @constructor
  */

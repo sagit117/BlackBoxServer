@@ -2,6 +2,7 @@ import { Express, NextFunction, Request, Response, Router } from 'express'
 import { Model, Query, UpdateWriteOpResult } from 'mongoose'
 import { checkAccessIP } from './decorators'
 import { StatusCode } from './controllers/baseController/base-controller'
+import { HttpUnauthorizedException } from './dataClasses/httpErrors'
 
 export interface BlackBoxApp extends Express {}
 
@@ -210,6 +211,12 @@ export function BlackBoxHttpTooManyRequests(): typeof HttpTooManyRequests
  * @constructor
  */
 export function BlackBoxHttpInternalServerException(): typeof HttpInternalServerException
+
+/**
+ * Класс внутренних ошибок сервера
+ * @constructor
+ */
+export function BlackBoxHttpInternalServerException(): typeof HttpUnauthorizedException
 
 /**
  * Базовый сервис

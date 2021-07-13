@@ -5,10 +5,15 @@ import { HttpTooManyRequests } from '../dataClasses/httpErrors'
 
 /**
  * Декоратор для проверки количества вызовов метода с одного IP
- * @param maxStack - количество запросов
+ * @param maxStack      - количество запросов
  * @param timeLifeStack - интервал жизни очереди
+ * @param messageError  - сообщение об ошибки
  */
-export function checkAccessIP(maxStack: number, timeLifeStack: number) {
+export function checkAccessIP(
+    maxStack: number,
+    timeLifeStack: number,
+    messageError?: string
+) {
     return function (
         _target: Object,
         _method: string,
@@ -36,7 +41,8 @@ export function checkAccessIP(maxStack: number, timeLifeStack: number) {
 
             if (stackItem.countRequest > maxStack) {
                 throw new HttpTooManyRequests(
-                    'Превышено число попыток, попробуйте позже!',
+                    messageError ||
+                        'Превышено число попыток, попробуйте позже!',
                     response
                 )
             }

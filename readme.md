@@ -248,7 +248,7 @@ export default class UsersController extends BlackBoxBaseController() {
     /**
      * Регистрация пользователя по email
      */
-    @checkAccessIp(5, 60000)
+    @checkAccessIp(5, 60000, 'error message')
     registrationByEmail() {
     }
 }

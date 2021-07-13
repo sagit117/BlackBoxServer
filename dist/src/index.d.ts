@@ -300,6 +300,7 @@ export function onErrorRequest(
  * Декоратор для проверки количества вызовов метода с одного IP
  * @param maxStack - количество запросов
  * @param timeLifeStack - интервал жизни очереди
+ * @param messageError  - сообщение об ошибки
  */
-export function checkAccessIp(maxStack: number, timeLifeStack: number)
+export function checkAccessIp(maxStack: number, timeLifeStack: number, messageError?: string)
 

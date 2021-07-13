@@ -216,7 +216,7 @@ export function BlackBoxHttpInternalServerException(): typeof HttpInternalServer
  * Класс внутренних ошибок сервера
  * @constructor
  */
-export function BlackBoxHttpInternalServerException(): typeof HttpUnauthorizedException
+export function BlackBoxHttpUnauthorizedException(): typeof HttpUnauthorizedException
 
 /**
  * Базовый сервис

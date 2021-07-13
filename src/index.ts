@@ -1,7 +1,6 @@
 import Express, { NextFunction, Request, Response } from 'express'
 import Compression from 'compression'
 import BodyParser from 'body-parser'
-// import CookieParse from 'cookie-parser'
 import { errorLog, errorPromiseLog, eventLog } from './emitters'
 import { warnMsg } from './utils/log-colors'
 import {
@@ -35,8 +34,6 @@ export function createApp(env: NodeJS.ProcessEnv) {
     /**
      * Парсеры
      */
-    // BlackBoxApp.use(CookieParse(env.COOKIE_SECRET)) // Передаем строку шифрования для cookie
-
     const urlencodedParser = BodyParser.urlencoded({
         limit: '50mb',
         extended: false,

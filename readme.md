@@ -30,7 +30,7 @@
             "value": "*"
         },
         {
-            "key": "Access-Control-Allow-Origin",
+            "key": "Access-Control-Allow-Methods",
             "value": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
         },
         {

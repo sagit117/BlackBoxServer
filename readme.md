@@ -17,13 +17,13 @@
     "DB_PASSWORD": "secret",
     "DB_NAME": "db_name",
     "DB_STRING_OPTIONS": "?authSource=db_name",
-    "USE_RABBIT": false,
+    "USE_RABBIT": true,
     "RABBITMQ_URL": "amqp://root:password@localhost:5672",
     "RABBITMQ_RECEIVE_QUEUE_NAME": "q_name",
     "RABBITMQ_RECEIVE_EXCHANGE": "ex_name",
     "RABBITMQ_RECEIVE_ROUTING_KEY": "k_name",
     "RABBITMQ_RECEIVE_BIND_XMTTL": 600000,
-    "USE_WS": false,
+    "USE_WS": true,
     "HEADERS": [
         {
             "key": "Access-Control-Allow-Origin",

@@ -4,9 +4,13 @@
 
 > npm install blackbox_server @types/express
 
-### В текущей версии поддерживаются
+### В текущей версии поддерживаются 
+#### базы данных:
 > MongoDB
+
+#### каналы связи:
 > WS
+
 > RabbitMQ
 
 

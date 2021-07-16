@@ -9,7 +9,7 @@
 > MongoDB
 
 #### каналы связи:
-> WS
+> WebSocket
 
 > RabbitMQ
 

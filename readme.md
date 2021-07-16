@@ -4,6 +4,12 @@
 
 > npm install blackbox_server @types/express
 
+### В текущей версии поддерживаются
+> MongoDB
+> WS
+> RabbitMQ
+
+
 ### Для конфигурации приложения необходимо в корне разместить файл configApp.json
 
 #### пример конфига

@@ -15,4 +15,5 @@ export const enum ReasonError {
     AMQP_CHANNEL = 'AMQP_CHANNEL',
     SOCKET = 'SOCKET',
     CONTROLLER = 'CONTROLLER',
+    JWT = 'JWT',
 }

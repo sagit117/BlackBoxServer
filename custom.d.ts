@@ -1,3 +1,5 @@
+import { IObjectJWT } from './src/utils/utils'
+
 declare namespace Express {
     export interface Request {
         ClientInfo: {
@@ -9,6 +11,7 @@ declare namespace Express {
             requestIP: string
             body: object
             queryParams: object
+            decodeAccessToken: IObjectJWT
         }
     }
 }

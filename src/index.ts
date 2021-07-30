@@ -19,7 +19,7 @@ import http from 'http'
 import BaseController from './controllers/baseController'
 import { IConfigApp, THeader } from './utils/utils'
 import BaseServiceModel from './services/baseServiceModel'
-import { checkAccessIP } from './decorators'
+import { checkAccessIP, checkBearerToken } from './decorators'
 
 export const BlackBoxApp = Express()
 /**
@@ -335,3 +335,4 @@ function setHeader(_request: Request, response: Response, next: NextFunction) {
 /** Декораторы */
 
 export const checkAccessIp = checkAccessIP
+export const checkTokenBearer = checkBearerToken

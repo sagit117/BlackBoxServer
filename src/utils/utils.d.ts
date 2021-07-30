@@ -1,3 +1,5 @@
+import { JwtPayload } from 'jsonwebtoken'
+
 export interface IConfigApp {
     PORT: number
     DB_HOST: string
@@ -19,3 +21,9 @@ export interface IConfigApp {
 }
 
 export type THeader = { key: string; value: string }
+
+interface IObjectJWT extends JwtPayload {
+    email: string
+}
+
+export type ObjectJWT = IObjectJWT | string

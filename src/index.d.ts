@@ -3,6 +3,7 @@ import { Model, Query, UpdateWriteOpResult } from 'mongoose'
 import { checkAccessIP } from './decorators'
 import { StatusCode } from './controllers/baseController/base-controller'
 import { HttpUnauthorizedException } from './dataClasses/httpErrors'
+import { IObjectJWT } from './utils/utils'
 
 export interface BlackBoxApp extends Express {}
 
@@ -36,12 +37,13 @@ export const enum BlackBoxStatusCode {
 /**
  * Перечисления причин ошибок
  */
-export const enum BlackBoxReasonErro {
+export const enum BlackBoxReasonError {
     REQUEST = 'REQUEST',
     AMQP = 'AMQP',
     AMQP_CHANNEL = 'AMQP_CHANNEL',
     SOCKET = 'SOCKET',
     CONTROLLER = 'CONTROLLER',
+    JWT = 'JWT',
 }
 
 // ==== Сущности ====
@@ -65,7 +67,9 @@ class BlackBoxBaseController {
      * @param promise   - запрос к БД
      */
     prepareQueryAndSendResponse(promise: Query<any[], any, {}>): void
-    prepareQueryAndSendResponse<T>(promise: Query<UpdateWriteOpResult, T, {}, any>): void
+    prepareQueryAndSendResponse<T>(
+        promise: Query<UpdateWriteOpResult, T, {}, any>
+    ): void
 
     /**
      * Отправка данных на фронт
@@ -109,7 +113,6 @@ class HttpInternalServerException extends HttpErrors {
     constructor(message: string, response: Response)
 }
 
-
 /**
  * Базовый класс для сервиса
  */
@@ -134,10 +137,10 @@ class BaseServiceModel {
     ): Query<T[], any, {}>
 
     /**
-    * Поиск последней записи по полю
-    * @param fieldName - название поля
-    * @param value     - значение поля
-    */
+     * Поиск последней записи по полю
+     * @param fieldName - название поля
+     * @param value     - значение поля
+     */
     findLastByOneField<T>(
         fieldName: string,
         value: string | number | null | boolean
@@ -158,28 +161,35 @@ class BaseServiceModel {
      * Создание или обновление записи
      * @param data - данные записи
      */
-    createOrUpdateById<T extends { _id: string }>(data: T): Query<UpdateWriteOpResult, T, {}, any>
+    createOrUpdateById<T extends { _id: string }>(
+        data: T
+    ): Query<UpdateWriteOpResult, T, {}, any>
 
     /**
      * Обновить одну запись по фильтру
      * @param filter
      * @param data
      */
-    updateOneByFilter<T>(filter: object, data: T): Query<UpdateWriteOpResult, T, {}, any>
-    updateOneByFilter<T>(filter: object, data: object): Query<UpdateWriteOpResult, T, {}, any>
+    updateOneByFilter<T>(
+        filter: object,
+        data: T
+    ): Query<UpdateWriteOpResult, T, {}, any>
+    updateOneByFilter<T>(
+        filter: object,
+        data: object
+    ): Query<UpdateWriteOpResult, T, {}, any>
 
     /**
      * Удаление записи
      * @param filter
      */
     remove(filter: object): Query<
-        { ok?: number | undefined; n?: number | undefined }
-        & {
-        deletedCount?: number | undefined
-    },
+        { ok?: number | undefined; n?: number | undefined } & {
+            deletedCount?: number | undefined
+        },
         any,
         {}
-        >
+    >
 }
 
 /**
@@ -248,6 +258,7 @@ export interface TBlackBoxRequest extends Request {
         requestIP: string
         body: object
         queryParams: object
+        decodeAccessToken: IObjectJWT
     }
 }
 export type TBlackBoxResponse = Response
@@ -309,5 +320,15 @@ export function onErrorRequest(
  * @param timeLifeStack - интервал жизни очереди
  * @param messageError  - сообщение об ошибки
  */
-export function checkAccessIp(maxStack: number, timeLifeStack: number, messageError?: string)
+export function checkAccessIp(
+    maxStack: number,
+    timeLifeStack: number,
+    messageError?: string
+)
 
+/**
+ * Аутентификация с помощью Bearer токена
+ * @param messageError  - сообщение об ошибки
+ * @param secretKey     - строка для расшифровки JWT
+ */
+export function checkTokenBearer(secretKey: string = '', messageError?: string)

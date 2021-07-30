@@ -332,3 +332,17 @@ export function checkAccessIp(
  * @param secretKey     - строка для расшифровки JWT
  */
 export function checkTokenBearer(secretKey: string = '', messageError?: string)
+
+/** utils */
+
+/**
+ * Проверка токена авторизации для предоставления ответа клиенту
+ * @param token     - токен
+ * @param response  - объект ответа
+ * @param secret    - строка расшифровки jwt
+ */
+export function decodeJwtForResponse(
+    token: string,
+    response: Response,
+    secret: string
+): IObjectJWT

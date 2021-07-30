@@ -13,13 +13,14 @@ import { StatusCode } from './controllers/baseController/base-controller'
 import { EventName, ReasonError } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
-import { getConfig } from './utils'
+import { decodeJWTforResponse, getConfig } from './utils'
 import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
 import { IConfigApp, THeader } from './utils/utils'
 import BaseServiceModel from './services/baseServiceModel'
 import { checkAccessIP, checkBearerToken } from './decorators'
+import { TBlackBoxRequest } from './index.d'
 
 export const BlackBoxApp = Express()
 /**
@@ -263,7 +264,11 @@ export function BlackBoxGetConfig(): IConfigApp {
  * @param _response
  * @param next
  */
-function onRequest(request: Request, _response: Response, next: NextFunction) {
+function onRequest(
+    request: TBlackBoxRequest,
+    _response: Response,
+    next: NextFunction
+) {
     const clientInfo = new ClientInfo(request)
 
     request.ClientInfo = clientInfo.toObject()
@@ -336,3 +341,7 @@ function setHeader(_request: Request, response: Response, next: NextFunction) {
 
 export const checkAccessIp = checkAccessIP
 export const checkTokenBearer = checkBearerToken
+
+/** utils */
+
+export const decodeJwtForResponse = decodeJWTforResponse

@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.checkTokenBearer = exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpUnauthorizedException = exports.BlackBoxHttpInternalServerException = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
+exports.decodeJwtForResponse = exports.checkTokenBearer = exports.checkAccessIp = exports.BlackBoxGetConfig = exports.onErrorRequest = exports.BlackBoxBaseServiceModel = exports.BlackBoxHttpUnauthorizedException = exports.BlackBoxHttpInternalServerException = exports.BlackBoxHttpTooManyRequests = exports.BlackBoxHttpValidationException = exports.BlackBoxBaseController = exports.BlackBoxRouter = exports.onErrorAfterResponse = exports.notFound = exports.createApp = exports.BlackBoxApp = void 0;
 const express_1 = __importDefault(require("express"));
 const compression_1 = __importDefault(require("compression"));
 const body_parser_1 = __importDefault(require("body-parser"));
@@ -152,3 +152,4 @@ function setHeader(_request, response, next) {
 }
 exports.checkAccessIp = decorators_1.checkAccessIP;
 exports.checkTokenBearer = decorators_1.checkBearerToken;
+exports.decodeJwtForResponse = utils_1.decodeJWTforResponse;

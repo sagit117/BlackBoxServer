@@ -1,6 +1,5 @@
 import StackAccessIP from '../dataClasses/stackAccessIP'
 import BaseController from '../controllers/baseController'
-import { Request } from 'express'
 import {
     HttpTooManyRequests,
     HttpUnauthorizedException,
@@ -32,7 +31,7 @@ export function checkAccessIP(
          * Подмена оригинального метода
          */
         descriptor.value = function (...args) {
-            const request = (this as BaseController).request as Request
+            const request = (this as BaseController).request
             const response = (this as BaseController).response
 
             const stackItem = StackAccessIP.addStack(

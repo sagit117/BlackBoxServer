@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from 'express'
+import { NextFunction, Response } from 'express'
 import { StatusCode } from './base-controller'
 import { Query } from 'mongoose'
 import {
@@ -7,16 +7,21 @@ import {
 } from '../../dataClasses/httpErrors'
 import { BlackBoxApp } from '../../index'
 import { ReasonError } from '../../emitters/emitters'
+import { TBlackBoxRequest } from '../../index.d'
 
 /**
  * Базовый класс для контроллера
  */
 export default class BaseController {
-    request: Request
+    request: TBlackBoxRequest
     response: Response
     next: NextFunction | null
 
-    constructor(request: Request, response: Response, next?: NextFunction) {
+    constructor(
+        request: TBlackBoxRequest,
+        response: Response,
+        next?: NextFunction
+    ) {
         this.request = request
         this.response = response
         this.next = next || null

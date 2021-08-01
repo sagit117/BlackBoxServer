@@ -258,7 +258,7 @@ export interface TBlackBoxRequest extends Request {
         requestIP: string
         body: object
         queryParams: object
-        decodeAccessToken: IObjectJWT
+        decodeAccessToken?: IObjectJWT
     }
 }
 export type TBlackBoxResponse = Response

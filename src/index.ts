@@ -20,7 +20,6 @@ import BaseController from './controllers/baseController'
 import { IConfigApp, THeader } from './utils/utils'
 import BaseServiceModel from './services/baseServiceModel'
 import { checkAccessIP, checkBearerToken } from './decorators'
-import { TBlackBoxRequest } from './index.d'
 
 export const BlackBoxApp = Express()
 /**
@@ -264,14 +263,10 @@ export function BlackBoxGetConfig(): IConfigApp {
  * @param _response
  * @param next
  */
-function onRequest(
-    request: TBlackBoxRequest,
-    _response: Response,
-    next: NextFunction
-) {
+function onRequest(request: Request, _response: Response, next: NextFunction) {
     const clientInfo = new ClientInfo(request)
 
-    request.ClientInfo = clientInfo.toObject()
+    request['ClientInfo'] = clientInfo.toObject()
 
     BlackBoxApp.emit(
         'eventLog',

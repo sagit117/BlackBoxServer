@@ -11,7 +11,7 @@ declare namespace Express {
             requestIP: string
             body: object
             queryParams: object
-            decodeAccessToken: IObjectJWT
+            decodeAccessToken?: IObjectJWT
         }
     }
 }

@@ -125,7 +125,7 @@ function BlackBoxGetConfig() {
 exports.BlackBoxGetConfig = BlackBoxGetConfig;
 function onRequest(request, _response, next) {
     const clientInfo = new clientInfo_1.default(request);
-    request.ClientInfo = clientInfo.toObject();
+    request['ClientInfo'] = clientInfo.toObject();
     exports.BlackBoxApp.emit('eventLog', "CLIENT_REQUEST", clientInfo.toString());
     next();
 }

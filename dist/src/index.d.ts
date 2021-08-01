@@ -3,7 +3,7 @@ import { Model, Query, UpdateWriteOpResult } from 'mongoose'
 import { checkAccessIP } from './decorators'
 import { StatusCode } from './controllers/baseController/base-controller'
 import { HttpUnauthorizedException } from './dataClasses/httpErrors'
-import { IObjectJWT } from './utils/utils'
+import { JwtPayload } from 'jsonwebtoken'
 
 export interface BlackBoxApp extends Express {}
 
@@ -334,6 +334,10 @@ export function checkAccessIp(
 export function checkTokenBearer(secretKey: string = '', messageError?: string)
 
 /** utils */
+
+interface IObjectJWT extends JwtPayload {
+    email: string
+}
 
 /**
  * Проверка токена авторизации для предоставления ответа клиенту

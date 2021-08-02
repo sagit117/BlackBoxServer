@@ -4,6 +4,8 @@ import { checkAccessIP } from './decorators'
 import { StatusCode } from './controllers/baseController/base-controller'
 import { HttpUnauthorizedException } from './dataClasses/httpErrors'
 import { JwtPayload } from 'jsonwebtoken'
+import { IConfigApp } from './utils/utils'
+import { getConfig, getConfigFile } from './utils'
 
 export interface BlackBoxApp extends Express {}
 
@@ -264,12 +266,6 @@ export interface TBlackBoxRequest extends Request {
 export type TBlackBoxResponse = Response
 export type TBlackBoxNextFunction = NextFunction
 
-/**
- * Чтение настроек
- * @constructor
- */
-export function BlackBoxGetConfig<T>(): T
-
 // ==== Обработка запросов ====
 
 /**
@@ -350,3 +346,15 @@ export function decodeJwtForResponse(
     response: Response,
     secret: string
 ): IObjectJWT
+
+/**
+ * Чтение настроек
+ * @constructor
+ */
+export function BlackBoxGetConfig<T>(): T
+
+/**
+ * Чтение из файла
+ * @param url
+ */
+export function readFromFile<T>(url: string): T

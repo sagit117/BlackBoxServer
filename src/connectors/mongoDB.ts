@@ -1,7 +1,7 @@
 import Mongoose from 'mongoose'
 import { EventName } from '../emitters/emitters'
 import StatusAppConnect from '../dataClasses/statusAppConnect'
-import { getConfig } from '../utils'
+import { getConfigFile } from '../utils'
 
 /**
  * Соединение с БД
@@ -9,16 +9,16 @@ import { getConfig } from '../utils'
  */
 export function connectDB(App) {
     return Mongoose.connect(
-        `mongodb://${getConfig().DB_HOST}:${getConfig().DB_PORT}${
-            getConfig().DB_STRING_OPTIONS
+        `mongodb://${getConfigFile.DB_HOST}:${getConfigFile.DB_PORT}${
+            getConfigFile.DB_STRING_OPTIONS
         }`,
         {
             useUnifiedTopology: true,
             useNewUrlParser: true,
             useCreateIndex: true,
-            dbName: getConfig().DB_NAME,
-            user: getConfig().DB_USER,
-            pass: getConfig().DB_PASSWORD,
+            dbName: getConfigFile.DB_NAME,
+            user: getConfigFile.DB_USER,
+            pass: getConfigFile.DB_PASSWORD,
         }
     )
         .then(() => {

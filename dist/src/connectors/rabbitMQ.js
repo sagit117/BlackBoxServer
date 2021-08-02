@@ -8,13 +8,13 @@ const callback_api_1 = __importDefault(require("amqplib/callback_api"));
 const utils_1 = require("../utils");
 const statusAppConnect_1 = __importDefault(require("../dataClasses/statusAppConnect"));
 exports.conn = null;
-const url = utils_1.getConfig().RABBITMQ_URL || '';
-const queueName = utils_1.getConfig().RABBITMQ_RECEIVE_QUEUE_NAME || '';
+const url = utils_1.getConfigFile.RABBITMQ_URL || '';
+const queueName = utils_1.getConfigFile.RABBITMQ_RECEIVE_QUEUE_NAME || '';
 const channelOptions = {
     durable: false,
     autoDelete: true,
 };
-const exchange = utils_1.getConfig().RABBITMQ_SEND_EXCHANGE || '';
+const exchange = utils_1.getConfigFile.RABBITMQ_SEND_EXCHANGE || '';
 const channelSendOptions = {
     durable: true,
 };
@@ -79,8 +79,8 @@ function receiveMsg(App) {
                 });
             }
         });
-        ch.bindQueue(queueName, utils_1.getConfig().RABBITMQ_RECEIVE_EXCHANGE || '', utils_1.getConfig().RABBITMQ_RECEIVE_ROUTING_KEY || '', {
-            'x-message-ttl': Number(utils_1.getConfig().RABBITMQ_RECEIVE_BIND_XMTTL) || 600000,
+        ch.bindQueue(queueName, utils_1.getConfigFile.RABBITMQ_RECEIVE_EXCHANGE || '', utils_1.getConfigFile.RABBITMQ_RECEIVE_ROUTING_KEY || '', {
+            'x-message-ttl': Number(utils_1.getConfigFile.RABBITMQ_RECEIVE_BIND_XMTTL) || 600000,
         });
     });
     function work(msg, cb) {
@@ -103,7 +103,7 @@ function sendingMsg(App, msg, doc) {
             App.emit('eventLog', "AMQP_CHANNEL_IS_CLOSED", 'amqp канал отправки закрыт');
         });
         ch.assertExchange(exchange, 'fanout', channelSendOptions);
-        const sendingIsSuccess = ch.publish(exchange, utils_1.getConfig().RABBITMQ_SEND_ROUTING_KEY || '', Buffer.from(msg));
+        const sendingIsSuccess = ch.publish(exchange, utils_1.getConfigFile.RABBITMQ_SEND_ROUTING_KEY || '', Buffer.from(msg));
         if (sendingIsSuccess) {
             doc.updateOne({ sending: true }).exec();
         }

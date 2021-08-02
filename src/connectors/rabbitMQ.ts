@@ -1,5 +1,5 @@
 import amqp from 'amqplib/callback_api'
-import { getConfig } from '../utils'
+import { getConfigFile } from '../utils'
 import StatusAppConnect from '../dataClasses/statusAppConnect'
 import { EventName, ReasonError } from '../emitters/emitters'
 
@@ -7,15 +7,16 @@ import { EventName, ReasonError } from '../emitters/emitters'
  * Глобальный екземпляр соединения с rabbitMQ
  */
 export let conn: amqp.Connection | null = null
+
 /**
  * URL для подключения к rabbitMQ
  */
-const url = getConfig().RABBITMQ_URL || ''
+const url = getConfigFile.RABBITMQ_URL || ''
 
 /**
  * название очереди получения
  */
-const queueName: string = getConfig().RABBITMQ_RECEIVE_QUEUE_NAME || ''
+const queueName: string = getConfigFile.RABBITMQ_RECEIVE_QUEUE_NAME || ''
 
 /**
  * опции для канала получения
@@ -28,7 +29,7 @@ const channelOptions = {
 /**
  * Название биржи
  */
-const exchange = getConfig().RABBITMQ_SEND_EXCHANGE || ''
+const exchange = getConfigFile.RABBITMQ_SEND_EXCHANGE || ''
 
 /**
  * опции для канала отправки
@@ -160,11 +161,11 @@ function receiveMsg(App) {
          */
         ch.bindQueue(
             queueName,
-            getConfig().RABBITMQ_RECEIVE_EXCHANGE || '',
-            getConfig().RABBITMQ_RECEIVE_ROUTING_KEY || '',
+            getConfigFile.RABBITMQ_RECEIVE_EXCHANGE || '',
+            getConfigFile.RABBITMQ_RECEIVE_ROUTING_KEY || '',
             {
                 'x-message-ttl':
-                    Number(getConfig().RABBITMQ_RECEIVE_BIND_XMTTL) || 600000,
+                    Number(getConfigFile.RABBITMQ_RECEIVE_BIND_XMTTL) || 600000,
             }
         )
     })
@@ -223,7 +224,7 @@ export function sendingMsg(App, msg: string, doc) {
 
         const sendingIsSuccess = ch.publish(
             exchange,
-            getConfig().RABBITMQ_SEND_ROUTING_KEY || '',
+            getConfigFile.RABBITMQ_SEND_ROUTING_KEY || '',
             Buffer.from(msg)
         )
 

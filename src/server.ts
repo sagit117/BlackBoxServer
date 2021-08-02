@@ -1,5 +1,5 @@
 import { BlackBoxApp } from './index'
-import { getConfig } from './utils'
+import { getConfigFile } from './utils'
 import { errorMsg } from './utils/log-colors'
 import { EventName } from './emitters/emitters'
 import { connectDB } from './connectors/mongoDB'
@@ -14,10 +14,10 @@ export function serverStart(server: http.Server, env: NodeJS.ProcessEnv) {
     /**
      * Создание веб-сокет соединения
      */
-    getConfig().USE_WS && createWebSocket({ server, path: env.BASE_PATH || '' })
+    getConfigFile.USE_WS && createWebSocket({ server, path: env.BASE_PATH || '' })
 
     server
-        .listen(getConfig().PORT, () => {
+        .listen(getConfigFile.PORT, () => {
             /**
              * Соединение с БД
              */
@@ -26,13 +26,13 @@ export function serverStart(server: http.Server, env: NodeJS.ProcessEnv) {
                     BlackBoxApp.emit(
                         'eventLog',
                         EventName.SERVER_IS_RUNNING,
-                        `port: ${getConfig().PORT}, mode: ${env.NODE_ENV}`
+                        `port: ${getConfigFile.PORT}, mode: ${env.NODE_ENV}`
                     )
 
                     /**
                      * Соединение с rabbitMQ
                      */
-                    getConfig().USE_RABBIT && connectRabbitMQ(BlackBoxApp)
+                    getConfigFile.USE_RABBIT && connectRabbitMQ(BlackBoxApp)
                 })
                 .catch((error) => {
                     console.error(

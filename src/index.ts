@@ -13,11 +13,11 @@ import { StatusCode } from './controllers/baseController/base-controller'
 import { EventName, ReasonError } from './emitters/emitters'
 import ClientInfo from './dataClasses/clientInfo'
 import StatusAppConnect from './dataClasses/statusAppConnect'
-import { decodeJWTforResponse, getConfig } from './utils'
+import { decodeJWTforResponse, getConfigFile, getConfig } from './utils'
 import { serverStart } from './server'
 import http from 'http'
 import BaseController from './controllers/baseController'
-import { IConfigApp, THeader } from './utils/utils'
+import { THeader } from './utils/utils'
 import BaseServiceModel from './services/baseServiceModel'
 import { checkAccessIP, checkBearerToken } from './decorators'
 
@@ -250,14 +250,6 @@ export function onErrorRequest(
 }
 
 /**
- * Чтение настроек
- * @constructor
- */
-export function BlackBoxGetConfig(): IConfigApp {
-    return getConfig()
-}
-
-/**
  * Собираем данные подключения http
  * @param request   - данные запроса
  * @param _response
@@ -303,7 +295,7 @@ function healthCheck(
      * вернем 404 код
      */
     if (
-        (getConfig().USE_RABBIT && !StatusAppConnect.connectedRabbit) ||
+        (getConfigFile.USE_RABBIT && !StatusAppConnect.connectedRabbit) ||
         !StatusAppConnect.connectedDB
     ) {
         return response
@@ -321,7 +313,7 @@ function healthCheck(
  * @param next
  */
 function setHeader(_request: Request, response: Response, next: NextFunction) {
-    const headers: THeader[] = getConfig().HEADERS
+    const headers: THeader[] = getConfigFile.HEADERS
 
     if (headers && Array.isArray(headers)) {
         headers.forEach((head) => {
@@ -340,3 +332,6 @@ export const checkTokenBearer = checkBearerToken
 /** utils */
 
 export const decodeJwtForResponse = decodeJWTforResponse
+export const BlackBoxGetConfig = getConfigFile
+export const readFromFile = getConfig
+

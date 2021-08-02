@@ -9,13 +9,15 @@ import { ReasonError } from '../emitters/emitters'
 /**
  * Загрузка настроек из файла конфигурации
  */
-export function getConfig(): IConfigApp {
+export function getConfig<T>(url: string): T {
     try {
-        return JSON.parse(fs.readFileSync('./configApp.json', 'utf8'))
+        return JSON.parse(fs.readFileSync(url, 'utf8'))
     } catch (e) {
         throw new Error(e)
     }
 }
+
+export const getConfigFile = getConfig<IConfigApp>('./configApp.json')
 
 /**
  * Проверка токена авторизации для предоставления ответа клиенту

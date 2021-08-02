@@ -22,20 +22,21 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.decodeJWTforResponse = exports.getConfig = void 0;
+exports.decodeJWTforResponse = exports.getConfigFile = exports.getConfig = void 0;
 const fs_1 = __importDefault(require("fs"));
 const httpErrors_1 = require("../dataClasses/httpErrors");
 const jsonwebtoken_1 = __importStar(require("jsonwebtoken"));
 const index_1 = require("../index");
-function getConfig() {
+function getConfig(url) {
     try {
-        return JSON.parse(fs_1.default.readFileSync('./configApp.json', 'utf8'));
+        return JSON.parse(fs_1.default.readFileSync(url, 'utf8'));
     }
     catch (e) {
         throw new Error(e);
     }
 }
 exports.getConfig = getConfig;
+exports.getConfigFile = getConfig('./configApp.json');
 function decodeJWTforResponse(token, response, secret) {
     try {
         return jsonwebtoken_1.default.verify(token, secret);

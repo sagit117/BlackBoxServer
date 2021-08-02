@@ -8,13 +8,13 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const statusAppConnect_1 = __importDefault(require("../dataClasses/statusAppConnect"));
 const utils_1 = require("../utils");
 function connectDB(App) {
-    return mongoose_1.default.connect(`mongodb://${utils_1.getConfig().DB_HOST}:${utils_1.getConfig().DB_PORT}${utils_1.getConfig().DB_STRING_OPTIONS}`, {
+    return mongoose_1.default.connect(`mongodb://${utils_1.getConfigFile.DB_HOST}:${utils_1.getConfigFile.DB_PORT}${utils_1.getConfigFile.DB_STRING_OPTIONS}`, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
         useCreateIndex: true,
-        dbName: utils_1.getConfig().DB_NAME,
-        user: utils_1.getConfig().DB_USER,
-        pass: utils_1.getConfig().DB_PASSWORD,
+        dbName: utils_1.getConfigFile.DB_NAME,
+        user: utils_1.getConfigFile.DB_USER,
+        pass: utils_1.getConfigFile.DB_PASSWORD,
     })
         .then(() => {
         App.emit('eventLog', "DB_IS_CONNECTED", `Подключение к БД прошло успешно`);

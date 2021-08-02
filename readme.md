@@ -54,7 +54,7 @@
 #### Функция для чтение настроек
 
 ```typescript
-export function BlackBoxGetConfig<T>(): T
+const getConfig = readFromFile<IConfigApp>('./configApp.json')
 ```
 
 ### Подключение основного модуля сервера

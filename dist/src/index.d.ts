@@ -348,12 +348,6 @@ export function decodeJwtForResponse(
 ): IObjectJWT
 
 /**
- * Чтение настроек
- * @constructor
- */
-export function BlackBoxGetConfig<T>(): T
-
-/**
  * Чтение из файла
  * @param url
  */

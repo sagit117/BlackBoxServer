@@ -332,6 +332,5 @@ export const checkTokenBearer = checkBearerToken
 /** utils */
 
 export const decodeJwtForResponse = decodeJWTforResponse
-export const BlackBoxGetConfig = getConfigFile
 export const readFromFile = getConfig
 

@@ -1,30 +1,9 @@
-import WebSocket, {
-    PerMessageDeflateOptions,
-    VerifyClientCallbackAsync,
-    VerifyClientCallbackSync,
-} from 'ws'
-import http from 'http'
-import https from 'https'
+import WebSocket from 'ws'
 import { BlackBoxApp } from '../index'
 import { ReasonError } from '../emitters/emitters'
+import { IOptions, Message } from './ws'
 
 export let webSocketServer: WebSocket.Server | null = null
-
-interface IOptions {
-    host?: string
-    port?: number
-    backlog?: number
-    server?: http.Server | https.Server
-    verifyClient?: VerifyClientCallbackAsync | VerifyClientCallbackSync
-    handleProtocols?: any
-    path?: string
-    noServer?: boolean
-    clientTracking?: boolean
-    perMessageDeflate?: boolean | PerMessageDeflateOptions
-    maxPayload?: number
-}
-
-export type Message = string | Buffer | ArrayBuffer | Buffer[]
 
 /**
  * Запускаем слушатель web socket

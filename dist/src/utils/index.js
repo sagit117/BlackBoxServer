@@ -47,7 +47,7 @@ function decodeJWTforResponse(token, response, secret) {
             throw new httpErrors_1.HttpUnauthorizedException(error.message, response);
         }
         else {
-            throw new httpErrors_1.HttpUnauthorizedException(error.message, response);
+            throw new httpErrors_1.HttpInternalServerException(error.message, response);
         }
     }
 }

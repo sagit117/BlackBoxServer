@@ -1,6 +1,9 @@
 import fs from 'fs'
 import { IConfigApp, IObjectJWT } from './utils'
-import { HttpUnauthorizedException } from '../dataClasses/httpErrors'
+import {
+    HttpInternalServerException,
+    HttpUnauthorizedException,
+} from '../dataClasses/httpErrors'
 import jwt, { TokenExpiredError } from 'jsonwebtoken'
 import { Response } from 'express'
 import { BlackBoxApp } from '../index'
@@ -38,7 +41,7 @@ export function decodeJWTforResponse(
         if (error instanceof TokenExpiredError) {
             throw new HttpUnauthorizedException(error.message, response)
         } else {
-            throw new HttpUnauthorizedException(error.message, response)
+            throw new HttpInternalServerException(error.message, response)
         }
     }
 }

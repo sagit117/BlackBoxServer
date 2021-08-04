@@ -9,9 +9,7 @@ import { getConfigFile } from '../utils'
  */
 export function connectDB(App) {
     return Mongoose.connect(
-        `mongodb://${getConfigFile.DB_HOST}:${getConfigFile.DB_PORT}${
-            getConfigFile.DB_STRING_OPTIONS
-        }`,
+        `mongodb://${getConfigFile.DB_HOST}:${getConfigFile.DB_PORT}${getConfigFile.DB_STRING_OPTIONS}`,
         {
             useUnifiedTopology: true,
             useNewUrlParser: true,
@@ -32,6 +30,7 @@ export function connectDB(App) {
         })
         .catch((error) => {
             StatusAppConnect.connectedDB = false
+
             return Promise.reject(error)
         })
 }

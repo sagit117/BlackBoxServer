@@ -22,6 +22,7 @@ import BaseServiceModel from './services/baseServiceModel'
 import { checkAccessIP, checkBearerToken } from './decorators'
 
 export const BlackBoxApp = Express()
+
 /**
  * Настройка приложения
  */
@@ -333,4 +334,3 @@ export const checkTokenBearer = checkBearerToken
 
 export const decodeJwtForResponse = decodeJWTforResponse
 export const readFromFile = getConfig
-

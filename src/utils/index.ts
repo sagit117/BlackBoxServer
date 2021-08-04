@@ -4,7 +4,7 @@ import {
     HttpInternalServerException,
     HttpUnauthorizedException,
 } from '../dataClasses/httpErrors'
-import jwt, { TokenExpiredError } from 'jsonwebtoken'
+import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken'
 import { Response } from 'express'
 import { BlackBoxApp } from '../index'
 import { ReasonError } from '../emitters/emitters'
@@ -38,7 +38,10 @@ export function decodeJWTforResponse(
     } catch (error) {
         BlackBoxApp.emit('errorLog', error, ReasonError.JWT)
 
-        if (error instanceof TokenExpiredError) {
+        if (
+            error instanceof TokenExpiredError ||
+            error instanceof JsonWebTokenError
+        ) {
             throw new HttpUnauthorizedException(error.message, response)
         } else {
             throw new HttpInternalServerException(error.message, response)

@@ -2,9 +2,6 @@
 <project version="4">
   <component name="PrettierConfiguration">
     <option name="myRunOnSave" value="true" />
-<<<<<<< HEAD
     <option name="myRunOnReformat" value="true" />
-=======
->>>>>>> update gitignore
   </component>
 </project>

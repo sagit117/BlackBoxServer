@@ -43,7 +43,8 @@ function decodeJWTforResponse(token, response, secret) {
     }
     catch (error) {
         index_1.BlackBoxApp.emit('errorLog', error, "JWT");
-        if (error instanceof jsonwebtoken_1.TokenExpiredError) {
+        if (error instanceof jsonwebtoken_1.TokenExpiredError ||
+            error instanceof jsonwebtoken_1.JsonWebTokenError) {
             throw new httpErrors_1.HttpUnauthorizedException(error.message, response);
         }
         else {
